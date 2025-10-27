@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Core.Entities;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var identityBuilder = builder.Services.AddIdentity<User, IdentityRole>(opts =>
+{
+    opts.Password.RequiredLength = 5;
+    opts.Password.RequireNonAlphanumeric = false;
+    opts.Password.RequireLowercase = false;
+    opts.Password.RequireUppercase = false;
+    opts.Password.RequireDigit = false;
+})
+    .AddEntityFrameworkStores<TelemetryContext>();
+//.AddDefaultTokenProviders();
+
+identityBuilder.AddTokenProvider("DigitalHealth", typeof(DataProtectorTokenProvider<User>));
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿using Core.Interfaces;
+﻿using Core.Contracts;
 
 
 namespace Domain.Entities.DomainEntities;
@@ -9,15 +9,15 @@ public record Diagnosis (string title, string text, Doctor doctor, Patient Patie
 
 public class MedicalRecord : IEntity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    public Guid PatientId { get; set; }
+    public Guid PatientId { get; private set; }
 
-    public Patient Patient { get; set; }    
+    public Patient Patient { get; private set; }    
 
-    public List<AnalysisResult> analyses { get; set; }
+    public IReadOnlyCollection<AnalysisResult> analyses { get; private set; } = null!;
 
-    public List<Diagnosis> diagnosises { get; set; }
+    public IReadOnlyCollection<Diagnosis> diagnosises { get; private set; } = null!;
 
 
 }

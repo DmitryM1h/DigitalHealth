@@ -9,7 +9,15 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
 {
     public void Configure(EntityTypeBuilder<Patient> builder)
     {
-        throw new NotImplementedException();
+
+        builder.HasKey(t => t.Id);
+
+        builder.HasOne(t => t.User)
+       .WithOne()
+       .HasForeignKey<Patient>(t => t.UserId)
+       .OnDelete(DeleteBehavior.Cascade)
+       .IsRequired();
+
     }
 }
 

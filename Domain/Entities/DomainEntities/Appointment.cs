@@ -1,4 +1,4 @@
-﻿using Core.Interfaces;
+﻿using Core.Contracts;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
@@ -6,16 +6,15 @@ namespace Domain.Entities
 
     public partial class Appointment : IEntity
     {
-        public Guid Id { get; set; }
-
-        public Period EventPeriod { get;set; }
-        public Guid DoctorId { get; set; }
-        public Guid PatientId { get; set; }
+        public Guid Id { get; init; }
+        public Period EventPeriod { get; private set; } = null!;
+        public Guid DoctorId { get; private set; }
+        public Guid PatientId { get; private set; }
 
 
         #region navigation properties
-        public Patient patient { get; set; }   
-        public Doctor doctor { get; set; }
+        public Patient patient { get; private set; } = null!;
+        public Doctor doctor { get; private set; } = null!;
         #endregion
 
 

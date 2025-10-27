@@ -11,7 +11,8 @@ namespace Infrastructure.Data.EntityConfiguration
         {
 
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.Id).UseIdentityColumn();
+            
+
             builder.HasOne(t => t.Doctor)
                 .WithOne(t => t.DoctorInfo)
                 .HasForeignKey<DoctorInfo>(t => t.DoctorId)

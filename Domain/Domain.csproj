@@ -11,7 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Aggregates\" />
     <Folder Include="Events\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="3.6.0" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,19 @@
-﻿using Core.Entities;
+﻿using Core.Contracts;
+using Core.Entities;
 
 
 
 namespace Domain.Entities;
-public partial class Patient : User
+public partial class Patient : IEntity
 {
-    public IEnumerable<Doctor> doctors { get; set; } = [];
-    public List<Appointment> Appointments { get; set; } = [];
 
+    public Guid Id { get; init; }
 
+    public Guid UserId { get; init; }
+    public virtual User User { get; init; }
+
+    public IReadOnlyCollection<Doctor> doctors { get; set; } = [];
+    public IReadOnlyCollection<Appointment> Appointments { get; set; } = [];
 
 
 }

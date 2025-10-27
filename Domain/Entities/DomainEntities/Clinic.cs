@@ -1,10 +1,10 @@
-﻿using Core.Interfaces;
+﻿using Core.Contracts;
 
 
 public class Clinic : IEntity
 {
-    public Guid Id { get; set; }
-    public string City { get; set; }
-    public string Address { get; set; }
+    public Guid Id { get; init; }
+    public string City { get; private set; } = null!;
+    public string Address { get; private set; } = null!;
 }
 
