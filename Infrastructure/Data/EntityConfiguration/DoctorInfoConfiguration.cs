@@ -13,10 +13,6 @@ namespace Infrastructure.Data.EntityConfiguration
             builder.HasKey(t => t.Id);
             
 
-            builder.HasOne(t => t.Doctor)
-                .WithOne(t => t.DoctorInfo)
-                .HasForeignKey<DoctorInfo>(t => t.DoctorId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

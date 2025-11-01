@@ -1,9 +1,12 @@
 ﻿
 using Core.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.ValueObjects;
 
 
+
+[Owned]
 public class Period : ValueObject
 {
     public DateTime StartDate { get; init; }

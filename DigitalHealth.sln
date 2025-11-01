@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{19EE523B-41B4-4E45-8433-C1C4C884B766}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "Auth\Auth.csproj", "{7500CC41-77F2-4E64-A62D-091A357BBC31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{E78078D2-A765-4324-B5BE-514A232A2A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E78078D2-A765-4324-B5BE-514A232A2A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E78078D2-A765-4324-B5BE-514A232A2A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7500CC41-77F2-4E64-A62D-091A357BBC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7500CC41-77F2-4E64-A62D-091A357BBC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7500CC41-77F2-4E64-A62D-091A357BBC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7500CC41-77F2-4E64-A62D-091A357BBC31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

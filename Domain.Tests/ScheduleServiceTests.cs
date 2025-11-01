@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Auth;
 using Domain.Entities;
 using Domain.Repository;
 using Domain.Services;
@@ -38,13 +38,11 @@ namespace Domain.Tests
 
         public static IEnumerable<object[]> CreatePeriods()
         {
-            return new List<object[]>
-        {
-            new object[]{Appointment.Create(Period.Create(DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1))) },
-         
-        };
+            return new List<object[]> { 
+                    
+                new object[]{new Appointment(Period.Create(DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(1))) },
 
-
+             };
         }
     }
 }

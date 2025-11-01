@@ -1,18 +1,37 @@
 ﻿using Domain.Entities;
 using Domain.Entities.DomainEntities;
 using Domain.Entities.SupportEntities;
+using Infrastructure.Data.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace Infrastructure.Data;
 public class TelemetryContext : DbContext
 {
-    public DbSet<Doctor> _doctors { get; set; }
-    public DbSet<DoctorInfo> _doctorInfos { get; set; }
-    public DbSet<Patient> _patients { get; set; }
-    public DbSet<Clinic> _clinics { get; set; }
-    public DbSet<Appointment> _appointments { get; set; }
-    public DbSet<WorkSchedule> _workSchedules { get; set; }
-    public DbSet<MedicalRecord> _medicalRecords { get; set; }
+    public TelemetryContext(DbContextOptions<TelemetryContext> options)
+            : base(options)
+    {
+    }
+
+    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<DoctorInfo> DoctorInfos { get; set; }
+    public DbSet<Patient> Patients { get; set; }
+    public DbSet<Clinic> Clinics { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<WorkSchedule> WorkSchedules { get; set; }
+    public DbSet<MedicalRecord> MedicalRecords { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.HasDefaultSchema("Telemetry");
+
+        modelBuilder.Entity<Clinic>(t => t.HasData(ClinicConfiguration.SeedClinics()));
+        modelBuilder.Entity<Doctor>(t => t.HasData(DoctorConfiguration.SeedDoctors()));
+    }
+
 
 }

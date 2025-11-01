@@ -15,21 +15,14 @@ public class WorkScheduleConfiguration : IEntityTypeConfiguration<WorkSchedule>
     public void Configure(EntityTypeBuilder<WorkSchedule> builder)
     {
         builder.HasKey(t => t.Id);
-        builder.Property(t => t.Id)
-            .ValueGeneratedOnAdd();
-
-        //builder.HasOne(t => t.Doctor)
-        //   .WithOne(t => t.WorkSchedule)
-        //   .HasForeignKey<WorkSchedule>(t => t.DoctorId)
-        //   .OnDelete(DeleteBehavior.Cascade);
-   
-    builder.ComplexProperty(t => t.Monday);
-        builder.ComplexProperty(t => t.Tuesday);
-        builder.ComplexProperty(t => t.Thursday);
-        builder.ComplexProperty(t => t.Wednesday);
-        builder.ComplexProperty(t => t.Friday);
-        builder.ComplexProperty(t => t.Saturday);
-        builder.ComplexProperty(t => t.Sunday);
+      
+        builder.OwnsOne(t => t.Monday);
+        builder.OwnsOne(t => t.Tuesday);
+        builder.OwnsOne(t => t.Thursday);
+        builder.OwnsOne(t => t.Wednesday);
+        builder.OwnsOne(t => t.Friday);
+        builder.OwnsOne(t => t.Saturday);
+        builder.OwnsOne(t => t.Sunday);
 
     }
 }

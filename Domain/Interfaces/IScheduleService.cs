@@ -1,5 +1,4 @@
-﻿using Core.Entities;
-using Domain.ValueObjects;
+﻿using Domain.ValueObjects;
 
 namespace Domain.Interfaces;
 

@@ -1,5 +1,4 @@
-﻿using Core.Entities;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Repository;
 using Domain.ValueObjects;

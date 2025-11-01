@@ -1,5 +1,7 @@
-﻿using Core.Entities;
+﻿using Auth;
+using Infrastructure.Configuration;
 using Infrastructure.Data;
+using Infrastructure.Data.Persistence.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -11,7 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var identityBuilder = builder.Services.AddIdentity<User, IdentityRole>(opts =>
+builder.Services.AddDatabaseContext()
+                .AddDatabaseUserContext();
+
+builder.Services.AddDataSources();
+builder.Services.AddMediatr();
+
+
+
+
+var identityBuilder = builder.Services.AddIdentity<User, IdentityRole<Guid>>(opts =>
 {
     opts.Password.RequiredLength = 5;
     opts.Password.RequireNonAlphanumeric = false;
@@ -19,10 +30,13 @@ var identityBuilder = builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireUppercase = false;
     opts.Password.RequireDigit = false;
 })
-    .AddEntityFrameworkStores<TelemetryContext>();
+    .AddEntityFrameworkStores<UserContext>();
 //.AddDefaultTokenProviders();
 
 identityBuilder.AddTokenProvider("DigitalHealth", typeof(DataProtectorTokenProvider<User>));
+
+
+
 
 var app = builder.Build();
 

@@ -12,9 +12,5 @@ public partial class Appointment : IAppointmentLogic
         EventPeriod = _period;
     }
 
-    public static Appointment Create(Period period)
-    {
-        return new Appointment(period);
-    }
 
 }

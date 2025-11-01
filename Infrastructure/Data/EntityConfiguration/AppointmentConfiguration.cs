@@ -22,6 +22,7 @@ namespace Infrastructure.Data.EntityConfiguration
                 .HasForeignKey(t => t.PatientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.OwnsOne(t => t.EventPeriod);
 
         }
     }

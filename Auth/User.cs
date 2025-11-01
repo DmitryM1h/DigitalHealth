@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 
-namespace Core.Entities;
+namespace Auth;
 
 public class User : IdentityUser<Guid>
 {
@@ -9,4 +9,3 @@ public class User : IdentityUser<Guid>
     public string? City { get;set; }
 
 }
-

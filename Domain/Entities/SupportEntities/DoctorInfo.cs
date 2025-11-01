@@ -3,15 +3,10 @@
 
 namespace Domain.Entities.SupportEntities
 {
-    public class DoctorInfo : IEntity
+    public class DoctorInfo : IEntity<Guid>
     {
 
         public Guid Id { get; init; }
-
-        public Guid DoctorId { get; set; }
-        public Doctor Doctor { get; set; }
-
-
         public string? ShortBio { get; set; }        
         public string? Education { get; set; }         
         public string? Qualifications { get; set; }  

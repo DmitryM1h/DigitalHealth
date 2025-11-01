@@ -12,11 +12,8 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
 
         builder.HasKey(t => t.Id);
 
-        builder.HasOne(t => t.User)
-       .WithOne()
-       .HasForeignKey<Patient>(t => t.UserId)
-       .OnDelete(DeleteBehavior.Cascade)
-       .IsRequired();
+        builder.HasOne(t => t.MedicalRecord)
+        .WithOne().HasForeignKey<Patient>(t => t.MedicalRecordId);
 
     }
 }

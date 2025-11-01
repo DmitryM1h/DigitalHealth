@@ -1,8 +1,8 @@
 ﻿namespace Core.Contracts;
 
 
-public interface IEntity
+public interface IEntity<T>
 {
-    Guid Id { get; init; }
+    T Id { get; init; }
 }
 

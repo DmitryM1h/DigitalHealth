@@ -4,12 +4,14 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities.DomainEntities;
 
-public class WorkSchedule : IEntity
+public class WorkSchedule : IEntity<Guid>
 {
+    public WorkSchedule()
+    {
+        
+    }
 
     public Guid Id { get; init; }
-
-    public Guid DoctorId { get; set; }
 
     public Period? Monday { get; set; }
     public Period? Tuesday { get; set; }
@@ -19,5 +21,27 @@ public class WorkSchedule : IEntity
     public Period? Saturday { get; set; }
     public Period? Sunday { get; set; }
 
-    public Doctor Doctor { get; set; } = null!;
+    public static WorkSchedule Create(
+        Period? monday = null,
+        Period? tuesday = null,
+        Period? wednesday = null,
+        Period? thursday = null,
+        Period? friday = null,
+        Period? saturday = null,
+        Period? sunday = null)
+    {
+        return new WorkSchedule
+        {
+            Id = Guid.NewGuid(),
+            Monday = monday,
+            Tuesday = tuesday,
+            Wednesday = wednesday,
+            Thursday = thursday,
+            Friday = friday,
+            Saturday = saturday,
+            Sunday = sunday
+        };
+    }
+
+
 }
