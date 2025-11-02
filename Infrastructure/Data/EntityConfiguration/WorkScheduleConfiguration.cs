@@ -24,5 +24,7 @@ public class WorkScheduleConfiguration : IEntityTypeConfiguration<WorkSchedule>
         builder.OwnsOne(t => t.Saturday);
         builder.OwnsOne(t => t.Sunday);
 
+       //TODO OwnsOne заменить на ComplexProperty
+       //один инстанс ComplexProperty изменит сразу несколько сущностей бд, если они в коде используют его
     }
 }

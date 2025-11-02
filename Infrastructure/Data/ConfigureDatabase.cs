@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -8,7 +9,6 @@ namespace Infrastructure.Data
 {
     public static class ConfigureDatabase
     {
-
         public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
         {
             return services.AddDbContextPool<TelemetryContext>(options =>
@@ -38,6 +38,12 @@ namespace Infrastructure.Data
                 
             });
 
+        }
+
+        public static string GetConnection(IConfiguration configuration)
+        {
+            return configuration.GetConnectionString("DefaultConnection")
+                ?? throw new Exception("Connection string not found");
         }
     }
 }

@@ -28,16 +28,19 @@ public class ScheduleService : IScheduleService
         foreach(var appointment in appointments)
         {
 
-            ProccessGapBeforeAppointment(currStartDate, appointment, slots);
+            ProcessGapBeforeAppointment(currStartDate, appointment, slots);
 
-            ProccessAppointment(currStartDate, appointment, slots);
-           
+            ProcessAppointment(appointment, slots);
+
+            currStartDate = appointment.EventPeriod.EndDate;
+
+
         }
 
         return Schedule.Create(slots, userId, period);
     }
 
-    public void ProccessGapBeforeAppointment(DateTime currStartDate, Appointment appointment, List<Slot> slots)
+    public void ProcessGapBeforeAppointment(DateTime currStartDate, Appointment appointment, List<Slot> slots)
     {
         var per = Period.Create(currStartDate, appointment.EventPeriod.StartDate);
 
@@ -54,7 +57,7 @@ public class ScheduleService : IScheduleService
 
     }
 
-    public void ProccessAppointment(DateTime currStartDate, Appointment appointment, List<Slot> slots)
+    public void ProcessAppointment(Appointment appointment, List<Slot> slots)
     {
 
         var occupiedPeriod = appointment.EventPeriod;
@@ -63,7 +66,6 @@ public class ScheduleService : IScheduleService
 
         slots.Add(occupiedSlot);
 
-        currStartDate = appointment.EventPeriod.EndDate;
     }
 
 
