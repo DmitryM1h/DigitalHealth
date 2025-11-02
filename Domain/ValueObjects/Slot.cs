@@ -5,17 +5,10 @@ namespace Domain.ValueObjects;
 
 public record struct Slot
 {
-    private bool IsLocked;
+    //private bool IsLocked;
     public Appointment? Appointment { get; init; }
     public Period Period { get; init; }
 
-    public Slot(Appointment _appointment, Period _period)
-    {
-        Appointment = _appointment;
-        IsLocked = true;
-        Period = _period;
-        
-    }
 
     public Slot(Period _period)
     {
@@ -23,8 +16,8 @@ public record struct Slot
 
     }
 
-    public void LockSlot() => IsLocked = true;
+    //public void LockSlot() => IsLocked = true;
 
-    public bool IsFree() => IsLocked == false;
+    //public bool IsFree() => IsLocked == false;
 
 }

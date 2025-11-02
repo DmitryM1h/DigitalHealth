@@ -11,61 +11,75 @@ public class ScheduleService : IScheduleService
     public const int MinimumSlotDuration = 10;
 
     private IAppointmentDataSource _appointmentDataSource;
+    private IScheduleDataSource _scheduleDataSource;
+    private ICalendarBlockDataSource _calendarBlockDataSource;
 
-    public ScheduleService(IAppointmentDataSource appointmentDataSource)
+    public ScheduleService(IAppointmentDataSource appointmentDataSource, IScheduleDataSource scheduleDataSource, ICalendarBlockDataSource calendarBlockDataSource)
     {
         _appointmentDataSource = appointmentDataSource;
+        _scheduleDataSource = scheduleDataSource;
+        _calendarBlockDataSource = calendarBlockDataSource;
     }
 
-    public async Task<Schedule> GetUserScheduleAsync(Guid userId, Period period)
+    public async Task<Schedule> GetDoctorScheduleAsync(Guid doctorId, Period period)
     {
-        var appointments = await _appointmentDataSource.GetAppointmentsForPeriodAsync(userId, period);
+        var appointments = await _appointmentDataSource.GetAppointmentsForPeriodAsync(doctorId, period) ?? [];
+        var doctorsBlocks = await _calendarBlockDataSource.GetDoctorsCalendarBlocksForPeriodAsync(doctorId, period) ?? [];
+        
+        var blockedPeriods = appointments.Select(t => new { t.EventPeriod.StartDate, t.EventPeriod.EndDate})
+            .Concat(doctorsBlocks.Select(t => new { t.period.StartDate, t.period.EndDate }))
+            .ToList();
+
+        var doctorSchedule = await _scheduleDataSource.GetDoctorsWorkingSchedule(doctorId);
 
         List<Slot> slots = [];
 
-        var currStartDate = period.StartDate;
-
-        foreach(var appointment in appointments)
+        foreach (var calendarEventsByDate in blockedPeriods.GroupBy(t => t.StartDate.Date))
         {
+            var workingHours = doctorSchedule.GetWorkingHoursForDay(calendarEventsByDate.Key.Date);
+            if (!workingHours.IsWorkingDay())
+                continue;
 
-            ProcessGapBeforeAppointment(currStartDate, appointment, slots);
+            
+            var currStartDate = GetBeginningOfWorkingDay(DateOnly.FromDateTime(calendarEventsByDate.Key), workingHours!.StartDate!.Value);
 
-            ProcessAppointment(appointment, slots);
+            foreach (var calendarEvent in calendarEventsByDate.OrderBy(t => t.StartDate))
+            {
 
-            currStartDate = appointment.EventPeriod.EndDate;
+                CreateSlotIfValid(currStartDate, calendarEvent.StartDate, slots);
 
+                currStartDate = calendarEvent.EndDate;
+            }
+
+            var endOfWorkingDay = calendarEventsByDate.Key.Date + workingHours!.EndDate!.Value.ToTimeSpan();
+
+            CreateSlotIfValid(currStartDate, endOfWorkingDay, slots);
 
         }
+        return Schedule.Create(slots, doctorId, period);
 
-        return Schedule.Create(slots, userId, period);
+ 
     }
-
-    public void ProcessGapBeforeAppointment(DateTime currStartDate, Appointment appointment, List<Slot> slots)
+    private void CreateSlotIfValid(DateTime start, DateTime end, List<Slot> slots)
     {
-        var per = Period.Create(currStartDate, appointment.EventPeriod.StartDate);
 
-        var gap = per.StartDate - per.EndDate;
+        var period = Period.Create(start, end);
 
-        var slot = new Slot(per);
+        var slot = new Slot(period);
+
+        var gap = period.EndDate - period.StartDate;
 
         if (gap < TimeSpan.FromMinutes(MinimumSlotDuration))
         {
-            slot.LockSlot();
+            return;
         }
 
         slots.Add(slot);
-
     }
 
-    public void ProcessAppointment(Appointment appointment, List<Slot> slots)
+    public static DateTime GetBeginningOfWorkingDay(DateOnly eventDate, TimeOnly startingHours)
     {
-
-        var occupiedPeriod = appointment.EventPeriod;
-
-        var occupiedSlot = new Slot(appointment, occupiedPeriod);
-
-        slots.Add(occupiedSlot);
-
+        return new DateTime(eventDate, startingHours);
     }
 
 

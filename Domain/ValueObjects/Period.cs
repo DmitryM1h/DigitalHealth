@@ -6,7 +6,6 @@ namespace Domain.ValueObjects;
 
 
 
-[Owned]
 public class Period : ValueObject
 {
     public DateTime StartDate { get; init; }
@@ -23,7 +22,7 @@ public class Period : ValueObject
 
     public static Period Create(DateTime startDate, DateTime endDate)
     {
-        if (startDate >= endDate)
+        if (startDate > endDate)
             throw new ArgumentException("Start date cannot be later than end date");
 
         return new Period(startDate, endDate);

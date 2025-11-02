@@ -8,7 +8,7 @@ public class Schedule : ValueObject
 
     public Period SchedulePeriod { get; init; }
     public Guid userId { get; init; }
-   // public IEnumerable<Appointment> Appointments { get; private set; } = [];
+
     public IEnumerable<Slot> Slots { get; private set; } = [];
 
 

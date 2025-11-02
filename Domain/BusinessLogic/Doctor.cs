@@ -13,13 +13,13 @@ public partial class Doctor : IDoctorLogic
         _scheduleService = scheduleService;
     }
 
-    public async Task<IEnumerable<Slot>> GetFreeSlotsAsync(Period period)
-    {
+    //public async Task<IEnumerable<Slot>> GetFreeSlotsAsync(Period period)
+    //{
 
-        var doctorsSchedule = await _scheduleService.GetUserScheduleAsync(Id, period);
+    //    var doctorsSchedule = await _scheduleService.GetUserScheduleAsync(Id, period);
 
-        return doctorsSchedule.Slots.Where(t => t.IsFree());
-    }
+    //    return doctorsSchedule.Slots.Where(t => t.IsFree());
+    //}
     
 
      #region FactoryMethods
@@ -35,8 +35,6 @@ public partial class Doctor : IDoctorLogic
             Id = Guid.NewGuid(),
             Specialty = specialty,
             Capacity = capacity,
-            WorkScheduleId = workSchedule.Id,
-            WorkSchedule = workSchedule,
             Clinic = clinic,
             DoctorInfo = doctorInfo,
             Appointments = new List<Appointment>(),

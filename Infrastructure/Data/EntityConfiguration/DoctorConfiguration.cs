@@ -17,14 +17,6 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
 
         builder.HasMany(t => t.Patients).WithMany(t => t.doctors);
 
-
-        builder.HasOne(t => t.WorkSchedule)
-            .WithOne()
-            .HasForeignKey<Doctor>(t => t.WorkScheduleId)
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired(false);
-            ;
-
        builder.HasOne(t => t.Clinic).WithMany()
             .HasForeignKey(t => t.ClinicId)
             .IsRequired();
@@ -54,42 +46,40 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
 
         // Создаем WorkSchedules как массив для переиспользования
         var workSchedules = new WorkSchedule[20];
+
+        var doctorsIds = new Guid[]
+{
+    Guid.Parse("a1b2c3d4-1234-5678-9abc-123456789abc"),
+    Guid.Parse("b2c3d4e5-2345-6789-0bcd-234567890bcd"),
+    Guid.Parse("c3d4e5f6-3456-7890-cdef-34567890cdef"),
+    Guid.Parse("d4e5f6a7-4567-8901-def0-45678901def0"),
+    Guid.Parse("e5f6a7b8-5678-9012-ef01-56789012ef01"),
+    Guid.Parse("f6a7b8c9-6789-0123-f012-67890123f012"),
+    Guid.Parse("a7b8c9d0-7890-1234-0123-789012340123"),
+    Guid.Parse("b8c9d0e1-8901-2345-1234-890123451234"),
+    Guid.Parse("c9d0e1f2-9012-3456-2345-901234562345"),
+    Guid.Parse("d0e1f2a3-0123-4567-3456-012345673456"),
+    Guid.Parse("e1f2a3b4-1234-5678-4567-123456784567"),
+    Guid.Parse("f2a3b4c5-2345-6789-5678-234567895678"),
+    Guid.Parse("a3b4c5d6-3456-7890-6789-345678906789"),
+    Guid.Parse("b4c5d6e7-4567-8901-7890-456789017890"),
+    Guid.Parse("c5d6e7f8-5678-9012-8901-567890128901"),
+    Guid.Parse("d6e7f8a9-6789-0123-9012-678901239012"),
+    Guid.Parse("e7f8a9b0-7890-1234-0123-789012340123"),
+    Guid.Parse("f8a9b0c1-8901-2345-1234-890123451234"),
+    Guid.Parse("a9b0c1d2-9012-3456-2345-901234562345"),
+    Guid.Parse("b0c1d2e3-0123-4567-3456-012345673456")
+};
         var baseDate = DateTime.Today;
 
-        // Сначала создаем все WorkSchedules
-        for (int i = 0; i < 20; i++)
-        {
-            workSchedules[i] = new WorkSchedule
-            {
-                Id = Guid.NewGuid(),
-                Monday = Period.Create(
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 8, 0, 0),
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 16, 0, 0)),
-                Tuesday = Period.Create(
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 8, 0, 0),
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 16, 0, 0)),
-                Wednesday = Period.Create(
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 8, 0, 0),
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 16, 0, 0)),
-                Thursday = Period.Create(
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 8, 0, 0),
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 16, 0, 0)),
-                Friday = Period.Create(
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 8, 0, 0),
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 15, 0, 0)),
-                Saturday = random.Next(0, 2) == 0 ? Period.Create(
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 9, 0, 0),
-                    new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 13, 0, 0)) : null,
-                Sunday = null
-            };
-        }
+      
 
-        Random rnd = new();
+            Random rnd = new();
 
         // Затем создаем докторов
         for (int i = 0; i < 20; i++)
         {
-            var doctorId = Guid.NewGuid();
+            var doctorId = doctorsIds[i];
 
             var clinicIndex = rnd.Next(1, 4); // Циклически используем клиники
             var currentClinic = clinics[clinicIndex];
@@ -111,7 +101,7 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
                 random.Next(5, 40)
              );
 
-      
+
 
             doctors.Add(doctor);
         }

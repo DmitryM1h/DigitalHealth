@@ -11,9 +11,6 @@ public partial class Patient : IEntity<Guid>
     }
     public Guid Id { get; init; }
 
-    //public Guid UserId { get; init; }
-    //public virtual User User { get; init; } = null!;
-
     public IReadOnlyCollection<Doctor> doctors { get; set; } = [];
     public IReadOnlyCollection<Appointment> Appointments { get; set; } = [];
 

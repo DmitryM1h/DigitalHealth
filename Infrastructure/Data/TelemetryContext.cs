@@ -3,6 +3,7 @@ using Domain.Entities.DomainEntities;
 using Domain.Entities.SupportEntities;
 using Infrastructure.Data.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Infrastructure.Data;
 public class TelemetryContext : DbContext
@@ -18,6 +19,8 @@ public class TelemetryContext : DbContext
     public DbSet<Clinic> Clinics { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<WorkSchedule> WorkSchedules { get; set; }
+    public DbSet<CalendarBlock> CalendarBlocks { get; set; }
+
     public DbSet<MedicalRecord> MedicalRecords { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,6 +31,7 @@ public class TelemetryContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema("Telemetry");
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         modelBuilder.Entity<Clinic>(t => t.HasData(ClinicConfiguration.SeedClinics()));
         modelBuilder.Entity<Doctor>(t => t.HasData(DoctorConfiguration.SeedDoctors()));
