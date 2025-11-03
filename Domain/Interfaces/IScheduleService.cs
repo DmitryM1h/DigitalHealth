@@ -1,8 +1,9 @@
 ﻿using Domain.ValueObjects;
+using static Domain.Services.ScheduleService;
 
 namespace Domain.Interfaces;
 
 public interface IScheduleService
 {
-    Task<Schedule> GetDoctorScheduleAsync(Guid userId, Period period);
+    public Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, DateMonth month);
 }
