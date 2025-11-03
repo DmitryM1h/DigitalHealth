@@ -10,7 +10,6 @@ namespace Infrastructure.Data.EntityConfiguration
         public void Configure(EntityTypeBuilder<Appointment> builder)
         {
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.Id).ValueGeneratedOnAdd();
 
             builder.HasOne(t => t.doctor)
                 .WithMany(t => t.Appointments)

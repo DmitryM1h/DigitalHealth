@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Domain.Repository;
 using Domain.ValueObjects;
 
@@ -34,9 +33,16 @@ public class ScheduleService : IScheduleService
 
         List<Slot> slots = [];
 
+        if (blockedPeriods.Count == 0)
+        {
+            slots.Add(new Slot(period));
+            return Schedule.Create(slots, doctorId, period);
+        }
+
         foreach (var calendarEventsByDate in blockedPeriods.GroupBy(t => t.StartDate.Date))
         {
             var workingHours = doctorSchedule.GetWorkingHoursForDay(calendarEventsByDate.Key.Date);
+
             if (!workingHours.IsWorkingDay())
                 continue;
 
@@ -60,7 +66,7 @@ public class ScheduleService : IScheduleService
 
  
     }
-    private void CreateSlotIfValid(DateTime start, DateTime end, List<Slot> slots)
+    private static void CreateSlotIfValid(DateTime start, DateTime end, List<Slot> slots)
     {
 
         var period = Period.Create(start, end);
@@ -78,6 +84,10 @@ public class ScheduleService : IScheduleService
     }
 
     public static DateTime GetBeginningOfWorkingDay(DateOnly eventDate, TimeOnly startingHours)
+    {
+        return new DateTime(eventDate, startingHours);
+    }
+    public static DateTime GetEndingOfWorkingDay(DateOnly eventDate, TimeOnly startingHours)
     {
         return new DateTime(eventDate, startingHours);
     }

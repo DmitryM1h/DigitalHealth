@@ -15,7 +15,7 @@ public partial class Patient : IEntity<Guid>
     public IReadOnlyCollection<Appointment> Appointments { get; set; } = [];
 
 
-    public Guid MedicalRecordId { get; set; }
+    public Guid? MedicalRecordId { get; set; }
     public MedicalRecord? MedicalRecord { get; set; }
 
 

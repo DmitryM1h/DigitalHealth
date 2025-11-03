@@ -20,7 +20,6 @@ public class TelemetryContext : DbContext
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<WorkSchedule> WorkSchedules { get; set; }
     public DbSet<CalendarBlock> CalendarBlocks { get; set; }
-
     public DbSet<MedicalRecord> MedicalRecords { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

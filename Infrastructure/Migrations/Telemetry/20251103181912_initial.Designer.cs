@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TelemetryContext))]
-    partial class TelemetryContextModelSnapshot : ModelSnapshot
+    [Migration("20251103181912_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,143 +145,143 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2c9de460-1ee7-47ab-a2b3-111c7ca98eb9"),
-                            Capacity = 6,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Pediatrics"
-                        },
-                        new
-                        {
-                            Id = new Guid("962d1ac1-cd78-43d0-8488-e2524b5e95b3"),
-                            Capacity = 8,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("14ee900c-6acf-4d0b-aba7-d98d653298e2"),
-                            Capacity = 28,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Orthopedics"
-                        },
-                        new
-                        {
-                            Id = new Guid("96ee3955-d26d-47c1-8928-7d6665471476"),
-                            Capacity = 8,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Dermatology"
-                        },
-                        new
-                        {
-                            Id = new Guid("59d9131a-fe41-4d59-8088-eff820669fa8"),
-                            Capacity = 26,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Pediatrics"
-                        },
-                        new
-                        {
-                            Id = new Guid("49297f67-a9c0-4930-be77-2eab416f9801"),
-                            Capacity = 31,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("f808d8aa-29aa-40f6-9daa-ee72a2a99f33"),
-                            Capacity = 17,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Id = new Guid("3be5f0b8-ca6a-4273-80a5-3524051a336f"),
+                            Capacity = 22,
+                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
                             Specialty = "Oncology"
                         },
                         new
                         {
-                            Id = new Guid("ece7fc37-e147-4db8-a2e5-f1efc91b5865"),
-                            Capacity = 22,
+                            Id = new Guid("55cd9f5a-3d91-4e6a-879a-a1a82e3ed957"),
+                            Capacity = 25,
                             ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
+                            Specialty = "Oncology"
+                        },
+                        new
+                        {
+                            Id = new Guid("f8f35928-3eec-4a5e-b0b7-abef7bdde488"),
+                            Capacity = 16,
+                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
+                            Specialty = "Oncology"
+                        },
+                        new
+                        {
+                            Id = new Guid("0fd4ac44-475a-40a6-be28-2428dc34dad2"),
+                            Capacity = 39,
+                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Specialty = "Neurology"
+                        },
+                        new
+                        {
+                            Id = new Guid("121fa33d-5346-4be0-96c3-17f9a2a8dba4"),
+                            Capacity = 26,
+                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Specialty = "Cardiology"
+                        },
+                        new
+                        {
+                            Id = new Guid("659b8ae3-84d1-4c2c-93eb-bfd2779953e3"),
+                            Capacity = 31,
+                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
+                            Specialty = "Ophthalmology"
+                        },
+                        new
+                        {
+                            Id = new Guid("273f2b49-1139-49b9-961b-f9c7e1a1c42e"),
+                            Capacity = 13,
+                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
+                            Specialty = "Psychiatry"
+                        },
+                        new
+                        {
+                            Id = new Guid("f859601d-63a9-4521-9164-cabcefcfcd73"),
+                            Capacity = 12,
+                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
                             Specialty = "Surgery"
                         },
                         new
                         {
-                            Id = new Guid("93916634-e8c1-4213-9723-e467219c7526"),
-                            Capacity = 23,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Orthopedics"
-                        },
-                        new
-                        {
-                            Id = new Guid("8ae061d2-900f-40c2-aa39-6f5aa551b8f6"),
-                            Capacity = 10,
+                            Id = new Guid("89448b26-e257-48a9-a7c5-a38b489a2675"),
+                            Capacity = 26,
                             ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Pediatrics"
+                            Specialty = "Cardiology"
                         },
                         new
                         {
-                            Id = new Guid("6db0b6ea-a19a-4afa-a6d7-d0e3254eb4d3"),
-                            Capacity = 6,
+                            Id = new Guid("94f06519-ddea-4a8f-830f-5236f164e8a1"),
+                            Capacity = 10,
+                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
+                            Specialty = "Cardiology"
+                        },
+                        new
+                        {
+                            Id = new Guid("a27723f7-67e6-4ac1-abcb-dc2ef98e4803"),
+                            Capacity = 22,
+                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Specialty = "Neurology"
+                        },
+                        new
+                        {
+                            Id = new Guid("36350ca8-7a67-4cbe-bf09-ecd7ae6a4fe1"),
+                            Capacity = 18,
+                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
+                            Specialty = "Neurology"
+                        },
+                        new
+                        {
+                            Id = new Guid("7de3617e-6a01-46ba-a16e-e474d3cf9cc8"),
+                            Capacity = 17,
                             ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
                             Specialty = "Ophthalmology"
                         },
                         new
                         {
-                            Id = new Guid("926f1199-f03f-4c37-80e0-107c85cd6dc6"),
+                            Id = new Guid("7c30f1f2-98d5-4208-92ff-3cbb436b78ec"),
+                            Capacity = 24,
+                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
+                            Specialty = "Surgery"
+                        },
+                        new
+                        {
+                            Id = new Guid("29de7f3a-a9c8-4c82-a70b-f096dcfc10f3"),
+                            Capacity = 22,
+                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Specialty = "Surgery"
+                        },
+                        new
+                        {
+                            Id = new Guid("176424da-7b51-42b7-83d8-a5bc27b50115"),
+                            Capacity = 24,
+                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
+                            Specialty = "Neurology"
+                        },
+                        new
+                        {
+                            Id = new Guid("6def89c2-3fb8-4672-ad36-9c9d48db5f4b"),
+                            Capacity = 15,
+                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
+                            Specialty = "Psychiatry"
+                        },
+                        new
+                        {
+                            Id = new Guid("d76151b9-8f33-4bf9-a996-028431b8867a"),
                             Capacity = 35,
                             ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Oncology"
-                        },
-                        new
-                        {
-                            Id = new Guid("b34aea93-1eab-40d3-9720-3557dce1bb00"),
-                            Capacity = 6,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Oncology"
-                        },
-                        new
-                        {
-                            Id = new Guid("3de53f89-d105-4e92-88fc-b74796d87d69"),
-                            Capacity = 32,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Dermatology"
-                        },
-                        new
-                        {
-                            Id = new Guid("6cd46b07-66bf-40c2-bc16-9e304850e0f0"),
-                            Capacity = 9,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
                             Specialty = "Pediatrics"
                         },
                         new
                         {
-                            Id = new Guid("ba9a4f2b-b565-40fa-aa6c-0dce757fe792"),
-                            Capacity = 33,
+                            Id = new Guid("6b0d8f83-ae22-4210-89f4-b2a7749423fb"),
+                            Capacity = 37,
                             ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("b41d12cb-12d9-4945-9dd4-cc01e4787c86"),
-                            Capacity = 39,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
                             Specialty = "Ophthalmology"
                         },
                         new
                         {
-                            Id = new Guid("6c213066-a237-42a5-950d-40a3b1df63c4"),
-                            Capacity = 21,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Ophthalmology"
-                        },
-                        new
-                        {
-                            Id = new Guid("42910855-db56-4dc3-b51e-008a1b6ae996"),
-                            Capacity = 36,
-                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
-                            Specialty = "Oncology"
-                        },
-                        new
-                        {
-                            Id = new Guid("c41c740f-b8a3-40ee-802d-fc43825b79ac"),
-                            Capacity = 12,
+                            Id = new Guid("b85b4049-c010-41d6-b3d3-f81994b72246"),
+                            Capacity = 20,
                             ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
+                            Specialty = "Neurology"
                         });
                 });
 
@@ -410,7 +413,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("MedicalRecordId")
+                    b.Property<Guid>("MedicalRecordId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -572,7 +575,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.DomainEntities.MedicalRecord", "MedicalRecord")
                         .WithOne()
-                        .HasForeignKey("Domain.Entities.Patient", "MedicalRecordId");
+                        .HasForeignKey("Domain.Entities.Patient", "MedicalRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("MedicalRecord");
                 });

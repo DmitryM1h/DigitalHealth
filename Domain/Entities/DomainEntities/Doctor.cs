@@ -1,6 +1,6 @@
 ﻿using Core.Contracts;
-using Domain.Entities.DomainEntities;
 using Domain.Entities.SupportEntities;
+
 
 namespace Domain.Entities;
 

@@ -52,33 +52,33 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Use(async (context, next) =>
-{
-    try
-    {
-        await next();
-    }
-    catch (Exception ex)
-    {
-        context.Response.StatusCode = 500;
+//app.Use(async (context, next) =>
+//{
+//    try
+//    {
+//        await next();
+//    }
+//    catch (Exception ex)
+//    {
+//        context.Response.StatusCode = 500;
 
-        var errorDetails = new ProblemDetails
-        {
-            Status = StatusCodes.Status500InternalServerError,
-            Title = "Server Error",
-            Instance = context.Request.Path,
+//        var errorDetails = new ProblemDetails
+//        {
+//            Status = StatusCodes.Status500InternalServerError,
+//            Title = "Server Error",
+//            Instance = context.Request.Path,
 
-        };
-        var options = new JsonSerializerOptions
-        {
+//        };
+//        var options = new JsonSerializerOptions
+//        {
 
-            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
-            WriteIndented = true,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        };
-        var json = JsonSerializer.Serialize(errorDetails, options);
-        await context.Response.WriteAsync(json);
-    }
-});
+//            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+//            WriteIndented = true,
+//            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+//        };
+//        var json = JsonSerializer.Serialize(errorDetails, options);
+//        await context.Response.WriteAsync(json);
+//    }
+//});
 
 app.Run();

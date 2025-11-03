@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Domain.Interfaces;
+using Domain.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Infrastructure.Configuration;
 
-public static class ConfigureMediatR
+public static class Configure
 {
     public static IServiceCollection AddMediatr(this IServiceCollection services)
     => services
@@ -11,6 +13,7 @@ public static class ConfigureMediatR
            {
                t.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
-           });
+           })
+        .AddScoped<IScheduleService, ScheduleService>();
 
 }

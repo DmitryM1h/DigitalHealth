@@ -6,7 +6,7 @@ namespace Domain.ValueObjects;
 public record struct Slot
 {
     //private bool IsLocked;
-    public Appointment? Appointment { get; init; }
+    //public Appointment? Appointment { get; init; }
     public Period Period { get; init; }
 
 
