@@ -13,8 +13,8 @@ namespace Domain.Entities
         public Guid PatientId { get; private set; }
 
 
-        public Patient patient { get; private set; } = null!;
-        public Doctor doctor { get; private set; } = null!;
+        public Patient Patient { get; private set; } = null!;
+        public Doctor Doctor { get; private set; } = null!;
 
 
         public Appointment() { }

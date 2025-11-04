@@ -1,7 +1,6 @@
 ﻿using Domain.Entities.DomainEntities;
 using Domain.Entities.SupportEntities;
 using Domain.Interfaces;
-using Domain.ValueObjects;
 
 namespace Domain.Entities;
 

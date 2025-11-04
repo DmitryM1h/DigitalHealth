@@ -69,15 +69,12 @@ public class ScheduleService : IScheduleService
 
 
 
-    public record struct DateMonth(int Year, int Month);
-    public record SlotsForDay(List<Slot> Slots, DateOnly date);
-
-    public async Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, DateMonth month)
+    public async Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, YearMonth yearMonth)
     {
 
-        var daysInMonth = DateTime.DaysInMonth(month.Year, month.Month);
+        var daysInMonth = DateTime.DaysInMonth(yearMonth.Year, yearMonth.Month);
 
-        var period = Period.Create(new DateTime(month.Year, month.Month, 1), new DateTime(month.Year, month.Month, daysInMonth));
+        var period = Period.Create(new DateTime(yearMonth.Year, yearMonth.Month, 1), new DateTime(yearMonth.Year, yearMonth.Month, daysInMonth));
 
         var appointments = await _appointmentDataSource.GetAppointmentsForPeriodAsync(doctorId, period) ?? [];
         var doctorsBlocks = await _calendarBlockDataSource.GetDoctorsCalendarBlocksForPeriodAsync(doctorId, period) ?? [];
@@ -94,26 +91,23 @@ public class ScheduleService : IScheduleService
         {
             List<Slot> slots = [];
 
-            var date = new DateTime(month.Year, month.Month, day);
+            var date = new DateTime(yearMonth.Year, yearMonth.Month, day);
 
             var workingHours = doctorSchedule.GetWorkingHoursForDay(date);
 
             if (!workingHours.IsWorkingDay())
                 continue;
 
-            var dayAppointments = appointments.Where(t => 
-            (t.EventPeriod.StartDate.Year, t.EventPeriod.StartDate.Month, t.EventPeriod.StartDate.Day) == (date.Year, date.Month, date.Day)).ToList();
+
 
             var dayBlockingPeriods = blockedPeriods.Where(t =>
             (t.StartDate.Year, t.StartDate.Month, t.StartDate.Day) == (date.Year, date.Month, date.Day)).ToList();
 
-            var blocks = dayAppointments.Select(t => new { t.EventPeriod.StartDate, t.EventPeriod.EndDate })
-            .Concat(dayBlockingPeriods.Select(t => new { t.StartDate, t.EndDate }))
-            .ToList();
+            
 
             var currStartDate = GetBeginningOfWorkingDay(DateOnly.FromDateTime(date), workingHours!.StartDate!.Value);
 
-            foreach(var block in blocks.OrderBy(t => t.StartDate))
+            foreach(var block in dayBlockingPeriods.OrderBy(t => t.StartDate))
             {
                 CreateSlotIfValid(currStartDate, block.StartDate, slots);
 

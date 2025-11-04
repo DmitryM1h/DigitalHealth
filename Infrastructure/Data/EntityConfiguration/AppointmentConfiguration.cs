@@ -11,17 +11,17 @@ namespace Infrastructure.Data.EntityConfiguration
         {
             builder.HasKey(t => t.Id);
 
-            builder.HasOne(t => t.doctor)
+            builder.HasOne(t => t.Doctor)
                 .WithMany(t => t.Appointments)
                 .HasForeignKey(t => t.DoctorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(t => t.patient)
+            builder.HasOne(t => t.Patient)
                 .WithMany(t => t.Appointments)
                 .HasForeignKey(t => t.PatientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.OwnsOne(t => t.EventPeriod);
+            builder.ComplexProperty(t => t.EventPeriod);
 
         }
     }

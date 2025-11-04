@@ -1,6 +1,5 @@
 ﻿
 using Core.Contracts;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domain.ValueObjects;
 
@@ -15,9 +14,8 @@ public class Period : ValueObject
 
     private Period(DateTime startDate, DateTime endDate)
     {
-        
-        StartDate = startDate;
-        EndDate = endDate;
+        StartDate = startDate.Kind == DateTimeKind.Utc ? startDate : DateTime.SpecifyKind(startDate, DateTimeKind.Utc);
+        EndDate = endDate.Kind == DateTimeKind.Utc ? endDate : DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
     }
 
     public static Period Create(DateTime startDate, DateTime endDate)

@@ -1,5 +1,6 @@
 ﻿using Application.Commands;
 using Domain.Entities;
+using Domain.Interfaces;
 using Domain.ValueObjects;
 using Infrastructure.Data;
 using MediatR;
@@ -15,19 +16,17 @@ namespace DigitalHealth.Controllers;
 public class DoctorController(IMediator mediator, TelemetryContext dbContext) : ControllerBase
 {
 
-    [HttpGet("Doctors")] 
+    [HttpGet("Doctors")]
     public async Task<IEnumerable<Doctor>> GetAllDoctors()
     {
-        var getDoctorsCommand = new GetDoctorsCommand();
-        var result = await mediator.Send(getDoctorsCommand);
-        return result;
+        return await dbContext.Doctors.ToListAsync();
     }
 
 
     public record PeriodDto(DateTime startDate, DateTime finishDate);
 
     [HttpGet("DoctorsFreeSlots")]
-    public async Task<IEnumerable<Slot>> GetDoctorsFreeSlots(Guid DoctorId, [FromQuery] PeriodDto period)
+    public async Task<IEnumerable<Slot>> GetDoctorsFreeSlots([FromRoute] Guid DoctorId, [FromQuery] PeriodDto period)
     {
 
         var getDoctorsSlotsCommand = new GetDoctorsFreeSlotsCommand(DoctorId, Period.Create(period.startDate, period.finishDate));
@@ -35,20 +34,46 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
         return result;
     }
 
+
+    [HttpGet("DoctorGaps")]
+    public async Task<Schedule> GetDoctorsGaps([FromRoute] Guid DoctorId, [FromQuery] YearMonth date, [FromServices] IScheduleService scheduleService)
+    {
+
+        return await scheduleService.GetDoctorFreeGapsAsync(DoctorId, date);
+    }
+
     [HttpGet("Appointments")]
-    public async Task<IEnumerable<Appointment>> GetDoctorsAppointments(Guid DoctorId)
+    public async Task<IEnumerable<Appointment>> GetDoctorsAppointments([FromRoute] Guid DoctorId)
     {
 
         return await dbContext.Appointments.Where(t => t.DoctorId == DoctorId).ToListAsync();
     }
 
-    [HttpGet("WorkingSchedule2")]
-    public async Task<IEnumerable<Slot>> GetDoctorsFreeeSlots(Guid DoctorId,  PeriodDto period)
+
+
+    public record MakeAppointmentRequest(
+    Guid DoctorId,
+    DateTime StartDate,
+    DateTime EndDate);
+
+    public record MakeAppointpentResponse(Guid DoctorId, Guid PatientId, Period period);
+
+    [HttpPost("users/{patientId}/appointments")]
+    public async Task<ActionResult<Appointment>> MakeAppointment([FromRoute] Guid patientId, MakeAppointmentRequest req)
     {
 
-        var getDoctorsSlotsCommand = new GetDoctorsFreeSlotsCommand(DoctorId, Period.Create(period.startDate, period.finishDate));
-        var result = await mediator.Send(getDoctorsSlotsCommand);
-        return result;
+        var period = Period.Create(req.StartDate, req.EndDate);
+        var app = Appointment.Create(period, req.DoctorId, patientId);
+
+        var apps = dbContext.Appointments.Where(t => t.EventPeriod.StartDate.Date == req.StartDate.Date && t.DoctorId == patientId).ToList();
+
+        if (apps.Any(t => t.EventPeriod.StartDate < req.EndDate &&
+                   t.EventPeriod.EndDate > req.StartDate))
+            return BadRequest("This slot is already occupied");
+
+        dbContext.Appointments.Add(app);
+        await dbContext.SaveChangesAsync();
+        return Ok(new MakeAppointpentResponse(app.DoctorId, app.PatientId, app.EventPeriod));
     }
 
 
