@@ -12,7 +12,6 @@ namespace Application.Commands
 {
     public record struct GetDoctorsFreeSlotsCommand(Guid DoctorId, Period period) : IRequest<IEnumerable<Slot>>;
 
-    //TODO Решить должен ли ссылаться Application на Infrastructure
     //internal sealed class GetDoctorsFreeSlotsCommandHandler(IScheduleService _scheduleService) : IRequestHandler<GetDoctorsFreeSlotsCommand, IEnumerable<Slot>>
     //{
     //    public async Task<IEnumerable<Slot>> Handle(GetDoctorsFreeSlotsCommand request, CancellationToken cancellationToken)
