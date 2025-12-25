@@ -24,7 +24,7 @@ public class ScheduleService : IScheduleService
     //{
     //    var appointments = await _appointmentDataSource.GetAppointmentsForPeriodAsync(doctorId, period) ?? [];
     //    var doctorsBlocks = await _calendarBlockDataSource.GetDoctorsCalendarBlocksForPeriodAsync(doctorId, period) ?? [];
-        
+
     //    var blockedPeriods = appointments.Select(t => new { t.EventPeriod.StartDate, t.EventPeriod.EndDate})
     //        .Concat(doctorsBlocks.Select(t => new { t.period.StartDate, t.period.EndDate }))
     //        .ToList();
@@ -46,7 +46,7 @@ public class ScheduleService : IScheduleService
     //        if (!workingHours.IsWorkingDay())
     //            continue;
 
-            
+
     //        var currStartDate = GetBeginningOfWorkingDay(DateOnly.FromDateTime(calendarEventsByDate.Key), workingHours!.StartDate!.Value);
 
     //        foreach (var calendarEvent in calendarEventsByDate.OrderBy(t => t.StartDate))
@@ -64,7 +64,7 @@ public class ScheduleService : IScheduleService
     //    }
     //    return Schedule.Create(slots, doctorId, period);
 
- 
+
     //}
 
 
@@ -87,7 +87,7 @@ public class ScheduleService : IScheduleService
 
         List<SlotsForDay> slotsForDays = [];
 
-        for(int day = 1; day <= daysInMonth; day++)
+        for (int day = 1; day <= daysInMonth; day++)
         {
             List<Slot> slots = [];
 
@@ -98,16 +98,13 @@ public class ScheduleService : IScheduleService
             if (!workingHours.IsWorkingDay())
                 continue;
 
-
-
             var dayBlockingPeriods = blockedPeriods.Where(t =>
             (t.StartDate.Year, t.StartDate.Month, t.StartDate.Day) == (date.Year, date.Month, date.Day)).ToList();
 
-            
 
             var currStartDate = GetBeginningOfWorkingDay(DateOnly.FromDateTime(date), workingHours!.StartDate!.Value);
 
-            foreach(var block in dayBlockingPeriods.OrderBy(t => t.StartDate))
+            foreach (var block in dayBlockingPeriods.OrderBy(t => t.StartDate))
             {
                 CreateSlotIfValid(currStartDate, block.StartDate, slots);
 
@@ -146,7 +143,7 @@ public class ScheduleService : IScheduleService
 
     public static DateTime GetBeginningOfWorkingDay(DateOnly eventDate, TimeOnly startingHours) => GetDateTimeFromDateAndHours(eventDate, startingHours);
     public static DateTime GetEndingOfWorkingDay(DateOnly eventDate, TimeOnly startingHours) => GetDateTimeFromDateAndHours(eventDate, startingHours);
-    
+
 
     public static DateTime GetDateTimeFromDateAndHours(DateOnly eventDate, TimeOnly hours)
     {

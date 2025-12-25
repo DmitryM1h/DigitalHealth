@@ -1,28 +1,28 @@
-﻿    using Core.Contracts;
-    using Domain.ValueObjects;
+﻿using Core.Contracts;
+using Domain.ValueObjects;
 
 
-    namespace Domain.Entities.DomainEntities;
+namespace Domain.Entities;
 
-    public class WorkSchedule : IEntity<Guid>
-    {
-        public Guid Id { get; init; }
+public class WorkSchedule : IEntity<Guid>
+{
+    public Guid Id { get; init; }
 
-        public Doctor Doctor { get; set; }
+    public Doctor Doctor { get; set; }
 
-        public WorkingHours Monday { get; set; }
-        public WorkingHours Tuesday { get; set; }
-        public WorkingHours Thursday { get; set; }
-        public WorkingHours Wednesday { get; set; }
-        public WorkingHours Friday { get; set; }
-        public WorkingHours Saturday { get; set; }
-        public WorkingHours Sunday { get; set; }
+    public WorkingHours Monday { get; set; }
+    public WorkingHours Tuesday { get; set; }
+    public WorkingHours Thursday { get; set; }
+    public WorkingHours Wednesday { get; set; }
+    public WorkingHours Friday { get; set; }
+    public WorkingHours Saturday { get; set; }
+    public WorkingHours Sunday { get; set; }
 
 
 
     public IEnumerable<(WorkingHours workingHours, DayOfWeek dayofWeek)> WorkingDaysSchedule()
     {
-    
+
         yield return (Monday, DayOfWeek.Monday);
         yield return (Tuesday, DayOfWeek.Tuesday);
         yield return (Wednesday, DayOfWeek.Wednesday);
@@ -50,30 +50,30 @@
             _ => throw new ArgumentOutOfRangeException(nameof(date))
         };
     }
-        
-    
 
-        public static WorkSchedule Create(
-            WorkingHours monday,
-            WorkingHours tuesday,
-            WorkingHours wednesday,
-            WorkingHours thursday,
-            WorkingHours friday,
-            WorkingHours saturday,
-            WorkingHours sunday)
+
+
+    public static WorkSchedule Create(
+        WorkingHours monday,
+        WorkingHours tuesday,
+        WorkingHours wednesday,
+        WorkingHours thursday,
+        WorkingHours friday,
+        WorkingHours saturday,
+        WorkingHours sunday)
+    {
+        return new WorkSchedule
         {
-            return new WorkSchedule
-            {
-                Id = Guid.NewGuid(),
-                Monday = monday,
-                Tuesday = tuesday,
-                Wednesday = wednesday,
-                Thursday = thursday,
-                Friday = friday,
-                Saturday = saturday,
-                Sunday = sunday
-            };
-        }
+            Id = Guid.NewGuid(),
+            Monday = monday,
+            Tuesday = tuesday,
+            Wednesday = wednesday,
+            Thursday = thursday,
+            Friday = friday,
+            Saturday = saturday,
+            Sunday = sunday
+        };
+    }
 
 
 

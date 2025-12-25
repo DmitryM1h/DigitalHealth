@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Entities.DomainEntities;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -22,6 +21,7 @@ public class WorkScheduleConfiguration : IEntityTypeConfiguration<WorkSchedule>
             .HasForeignKey<WorkSchedule>(t => t.Id)
             .IsRequired();
 
+        builder.OwnsOne(t => t.Monday);
         ConfigureWorkingHours(builder.ComplexProperty(t => t.Monday));
         ConfigureWorkingHours(builder.ComplexProperty(t => t.Tuesday));
         ConfigureWorkingHours(builder.ComplexProperty(t => t.Wednesday));

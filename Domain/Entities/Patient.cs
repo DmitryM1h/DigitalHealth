@@ -1,9 +1,9 @@
 ﻿using Core.Contracts;
-using Domain.Entities.DomainEntities;
 
 
 
 namespace Domain.Entities;
+
 public partial class Patient : IEntity<Guid>
 {
     public Patient()

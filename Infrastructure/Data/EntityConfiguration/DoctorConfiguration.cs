@@ -1,7 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Entities.DomainEntities;
-using Domain.Entities.SupportEntities;
-using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,16 +9,22 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
 {
     public void Configure(EntityTypeBuilder<Doctor> builder)
     {
-        builder.HasKey(t => t.Id);
+        builder
+            .HasKey(t => t.Id);
 
 
-        builder.HasMany(t => t.Patients).WithMany(t => t.doctors);
+        builder
+            .HasMany(t => t.Patients).WithMany(t => t.doctors);
 
-       builder.HasOne(t => t.Clinic).WithMany()
-            .HasForeignKey(t => t.ClinicId)
+       builder
+            .HasOne(t => t.Clinic)
+            .WithMany()
             .IsRequired();
 
-        builder.HasOne(t => t.DoctorInfo).WithOne().HasForeignKey<Doctor>(t => t.DoctorInfoId).OnDelete(DeleteBehavior.Cascade);
+        builder
+            .HasOne(t => t.DoctorInfo)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
 
 
     }

@@ -3,7 +3,7 @@
 
 using Domain.ValueObjects;
 
-namespace Domain.Entities.DomainEntities
+namespace Domain.Entities
 {
     public class CalendarBlock
     {

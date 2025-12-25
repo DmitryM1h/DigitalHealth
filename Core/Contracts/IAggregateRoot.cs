@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Contracts;
 
-public interface IAggregateRoot
+public interface IAggregateRoot<TIdType>
 {
-
+    TIdType Id { get; }
 }

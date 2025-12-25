@@ -24,7 +24,7 @@ namespace Infrastructure.Data.Persistence
 
         public async Task<List<Appointment>> GetAppointmentsForPeriodAsync(Guid userID, Period period)
         {
-            return await dbContext.Appointments.Where(t => t.DoctorId == userID && t.EventPeriod.StartDate >= period.StartDate
+            return await dbContext.Appointments.Where(t => t.Doctor.Id == userID && t.EventPeriod.StartDate >= period.StartDate
                                                             && t.EventPeriod.EndDate <= period.EndDate).ToListAsync();
         }
     }

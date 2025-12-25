@@ -46,7 +46,7 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     public async Task<IEnumerable<Appointment>> GetDoctorsAppointments([FromRoute] Guid DoctorId)
     {
 
-        return await dbContext.Appointments.Where(t => t.DoctorId == DoctorId).ToListAsync();
+        return await dbContext.Appointments.Where(t => t.Doctor.Id == DoctorId).ToListAsync();
     }
 
 
@@ -62,18 +62,19 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     public async Task<ActionResult<Appointment>> MakeAppointment([FromRoute] Guid patientId, MakeAppointmentRequest req)
     {
 
-        var period = Period.Create(req.StartDate, req.EndDate);
-        var app = Appointment.Create(period, req.DoctorId, patientId);
+        //var period = Period.Create(req.StartDate, req.EndDate);
+        //var app = Appointment.Create(period, req.DoctorId, patientId);
 
-        var apps = dbContext.Appointments.Where(t => t.EventPeriod.StartDate.Date == req.StartDate.Date && t.DoctorId == patientId).ToList();
+        //var apps = dbContext.Appointments.Where(t => t.EventPeriod.StartDate.Date == req.StartDate.Date && t.DoctorId == patientId).ToList();
 
-        if (apps.Any(t => t.EventPeriod.StartDate < req.EndDate &&
-                   t.EventPeriod.EndDate > req.StartDate))
-            return BadRequest("This slot is already occupied");
+        //if (apps.Any(t => t.EventPeriod.StartDate < req.EndDate &&
+        //           t.EventPeriod.EndDate > req.StartDate))
+        //    return BadRequest("This slot is already occupied");
 
-        dbContext.Appointments.Add(app);
-        await dbContext.SaveChangesAsync();
-        return Ok(new MakeAppointpentResponse(app.DoctorId, app.PatientId, app.EventPeriod));
+        //dbContext.Appointments.Add(app);
+        //await dbContext.SaveChangesAsync();
+        //return Ok(new MakeAppointpentResponse(app.DoctorId, app.PatientId, app.EventPeriod));
+        return Ok();
     }
 
 

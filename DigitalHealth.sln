@@ -5,11 +5,11 @@ VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth", "DigitalHealth\DigitalHealth.csproj", "{227BDB51-0EA0-478C-AA13-081C6BC70793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{9FA1440C-B183-4B48-9C2A-FA3CA13A493A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Domain", "Domain\DigitalHealth.Domain.csproj", "{9FA1440C-B183-4B48-9C2A-FA3CA13A493A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{511FCC41-89A4-4961-87DC-60E0CDE80D35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Infrastructure", "Infrastructure\DigitalHealth.Infrastructure.csproj", "{511FCC41-89A4-4961-87DC-60E0CDE80D35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{0B0F2B49-9365-495F-8C03-D6C27F5A51CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Core", "Core\DigitalHealth.Core.csproj", "{0B0F2B49-9365-495F-8C03-D6C27F5A51CE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
 EndProject
@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Domain.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{19EE523B-41B4-4E45-8433-C1C4C884B766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Application", "Application\DigitalHealth.Application.csproj", "{F83F55E5-BCBA-43F2-AC74-DE41B3BB8674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "Auth\Auth.csproj", "{7500CC41-77F2-4E64-A62D-091A357BBC31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Auth", "Auth\DigitalHealth.Auth.csproj", "{7500CC41-77F2-4E64-A62D-091A357BBC31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

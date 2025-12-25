@@ -9,8 +9,8 @@ namespace Domain.Entities
 
         public Guid Id { get; init; }
         public Period EventPeriod { get; private set; } = null!;
-        public Guid DoctorId { get; private set; }
-        public Guid PatientId { get; private set; }
+        //public Guid DoctorId { get; private set; }
+        //public Guid PatientId { get; private set; }
 
 
         public Patient Patient { get; private set; } = null!;

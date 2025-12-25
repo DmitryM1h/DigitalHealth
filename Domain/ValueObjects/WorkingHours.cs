@@ -1,5 +1,4 @@
 ﻿using Core.Contracts;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -8,7 +7,7 @@ namespace Domain.ValueObjects
     public class WorkingHours : ValueObject
     {
 
-        
+
         public TimeOnly? StartDate { get; private set; }
         public TimeOnly? EndDate { get; private set; }
 

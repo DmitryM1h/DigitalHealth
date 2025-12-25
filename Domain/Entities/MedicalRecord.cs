@@ -1,18 +1,18 @@
 ﻿using Core.Contracts;
 
 
-namespace Domain.Entities.DomainEntities;
+namespace Domain.Entities;
 
 
 public record AnalysisResult(string title, string pdfUrl);
-public record Diagnosis (string title, string text, Doctor doctor, Patient Patient);
+public record Diagnosis(string title, string text, Doctor doctor, Patient Patient);
 
 public class MedicalRecord : IEntity<Guid>
 {
 
     public MedicalRecord()
     {
-        
+
     }
     public Guid Id { get; init; }
 

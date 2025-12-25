@@ -1,5 +1,4 @@
 ﻿using Domain.ValueObjects;
-using static Domain.Services.ScheduleService;
 
 namespace Domain.Interfaces;
 

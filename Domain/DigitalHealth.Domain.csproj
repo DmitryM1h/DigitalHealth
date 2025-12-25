@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DomainEvents\" />
+    <ProjectReference Include="..\Core\DigitalHealth.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

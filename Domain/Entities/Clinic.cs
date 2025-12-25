@@ -1,11 +1,22 @@
 ﻿using Core.Contracts;
+using Domain.Entities;
 
 
-public class Clinic : IEntity<Guid>
+
+public class Clinic : IEntity<Guid>, IAggregateRoot<Guid>
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; init; }// абстрактный коласс
     public string City { get; private set; } = null!;
     public string Address { get; private set; } = null!;
+
+    public IReadOnlyCollection<Doctor> Doctors => _doctor.AsReadOnly();
+
+    private List<Doctor> _doctor = new List<Doctor>();
+
+    public void HireDoctor(Doctor doctor)
+    {
+        _doctor.Add(doctor);
+    }
 
     public static Clinic Create(string city, string address)
     {

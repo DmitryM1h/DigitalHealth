@@ -1,6 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Entities.DomainEntities;
-using Domain.Entities.SupportEntities;
 using Infrastructure.Data.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;

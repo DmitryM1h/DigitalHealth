@@ -1,7 +1,4 @@
-﻿
-using Domain.Entities;
-
-namespace Domain.ValueObjects;
+﻿namespace Domain.ValueObjects;
 
 public record struct Slot
 {

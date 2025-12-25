@@ -10,9 +10,9 @@
     <PackageReference Include="MediatR" Version="13.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Domain\DigitalHealth.Domain.csproj" />
+		<ProjectReference Include="..\Infrastructure\DigitalHealth.Infrastructure.csproj" />
+	</ItemGroup>
 
 </Project>

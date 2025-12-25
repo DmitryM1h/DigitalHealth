@@ -1,5 +1,4 @@
 ﻿using Core.Contracts;
-using static Domain.Services.ScheduleService;
 
 
 namespace Domain.ValueObjects;
@@ -19,7 +18,7 @@ public class Schedule : ValueObject
         userId = _userId;
         Slots = _slots;
     }
-    
+
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

@@ -13,12 +13,11 @@ namespace Infrastructure.Data.EntityConfiguration
 
             builder.HasOne(t => t.Doctor)
                 .WithMany(t => t.Appointments)
-                .HasForeignKey(t => t.DoctorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(t => t.Patient)
                 .WithMany(t => t.Appointments)
-                .HasForeignKey(t => t.PatientId)
+                //.HasForeignKey(t => t.PatientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.ComplexProperty(t => t.EventPeriod);
