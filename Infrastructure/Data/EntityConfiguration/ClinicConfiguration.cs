@@ -9,7 +9,12 @@ namespace Infrastructure.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Clinic> builder)
         {
-            builder.HasKey(t => t.Id);
+            builder
+                .HasKey(t => t.Id);
+
+            builder
+                .HasMany(t => t.Doctors)
+                .WithOne(t => t.Clinic);
         }
 
         public static IEnumerable<Clinic> SeedClinics()

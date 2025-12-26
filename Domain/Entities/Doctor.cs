@@ -24,7 +24,6 @@ public partial class Doctor : IEntity<Guid>
     public Doctor(
      string specialty,
      int capacity,
-     WorkSchedule workSchedule,
      Clinic clinic,
      DoctorInfo doctorInfo)
     {

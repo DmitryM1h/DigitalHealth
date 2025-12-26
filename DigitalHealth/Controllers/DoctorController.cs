@@ -5,6 +5,7 @@ using Domain.ValueObjects;
 using Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalHealth.Controllers;
@@ -22,17 +23,17 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
         return await dbContext.Doctors.ToListAsync();
     }
 
+    [HttpGet("Schedule")]
+    public ActionResult<WorkSchedule> GetDoctorsSchedule(Guid doctorId)
+    {
+        var schedule = dbContext.WorkSchedules.Where(t => t.Doctor.Id == doctorId).FirstOrDefault();
+
+        var response = new {schedule?.Monday, schedule?.Tuesday, schedule?.Thursday, schedule?.Wednesday, schedule?.Friday, schedule?.Saturday, schedule?.Sunday};
+        return Ok(response);
+    }
+
 
     public record PeriodDto(DateTime startDate, DateTime finishDate);
-
-    [HttpGet("DoctorsFreeSlots")]
-    public async Task<IEnumerable<Slot>> GetDoctorsFreeSlots([FromRoute] Guid DoctorId, [FromQuery] PeriodDto period)
-    {
-
-        var getDoctorsSlotsCommand = new GetDoctorsFreeSlotsCommand(DoctorId, Period.Create(period.startDate, period.finishDate));
-        var result = await mediator.Send(getDoctorsSlotsCommand);
-        return result;
-    }
 
 
     [HttpGet("DoctorGaps")]
@@ -50,32 +51,6 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     }
 
 
-
-    public record MakeAppointmentRequest(
-    Guid DoctorId,
-    DateTime StartDate,
-    DateTime EndDate);
-
-    public record MakeAppointpentResponse(Guid DoctorId, Guid PatientId, Period period);
-
-    [HttpPost("users/{patientId}/appointments")]
-    public async Task<ActionResult<Appointment>> MakeAppointment([FromRoute] Guid patientId, MakeAppointmentRequest req)
-    {
-
-        //var period = Period.Create(req.StartDate, req.EndDate);
-        //var app = Appointment.Create(period, req.DoctorId, patientId);
-
-        //var apps = dbContext.Appointments.Where(t => t.EventPeriod.StartDate.Date == req.StartDate.Date && t.DoctorId == patientId).ToList();
-
-        //if (apps.Any(t => t.EventPeriod.StartDate < req.EndDate &&
-        //           t.EventPeriod.EndDate > req.StartDate))
-        //    return BadRequest("This slot is already occupied");
-
-        //dbContext.Appointments.Add(app);
-        //await dbContext.SaveChangesAsync();
-        //return Ok(new MakeAppointpentResponse(app.DoctorId, app.PatientId, app.EventPeriod));
-        return Ok();
-    }
 
 
 }

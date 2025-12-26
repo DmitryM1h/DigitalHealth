@@ -16,11 +16,6 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         builder
             .HasMany(t => t.Patients).WithMany(t => t.doctors);
 
-       builder
-            .HasOne(t => t.Clinic)
-            .WithMany()
-            .IsRequired();
-
         builder
             .HasOne(t => t.DoctorInfo)
             .WithOne()
