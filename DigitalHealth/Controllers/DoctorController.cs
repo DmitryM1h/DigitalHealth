@@ -33,22 +33,24 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     }
 
 
-    public record PeriodDto(DateTime startDate, DateTime finishDate);
-
-
     [HttpGet("DoctorGaps")]
-    public async Task<Schedule> GetDoctorsGaps([FromRoute] Guid DoctorId, [FromQuery] YearMonth date, [FromServices] IScheduleService scheduleService)
+    public async Task<Schedule> GetDoctorsGaps([FromQuery] Guid doctorId, [FromQuery] DateTime date, [FromServices] IScheduleService scheduleService)
     {
 
-        return await scheduleService.GetDoctorFreeGapsAsync(DoctorId, date);
+        return await scheduleService.GetDoctorFreeGapsAsync(doctorId, date);
     }
 
     [HttpGet("Appointments")]
-    public async Task<IEnumerable<Appointment>> GetDoctorsAppointments([FromRoute] Guid DoctorId)
+    public async Task<IEnumerable<DoctorsAppointmentsDto>> GetDoctorsAppointments([FromQuery] Guid doctorId)
     {
 
-        return await dbContext.Appointments.Where(t => t.Doctor.Id == DoctorId).ToListAsync();
+        var res = dbContext.Appointments.Where(t => t.Doctor.Id == doctorId).Include(t => t.Patient)
+            .Select(t => new DoctorsAppointmentsDto(t.Doctor.Id, t.Patient.Id, t.EventPeriod));
+
+        return res;
     }
+
+    public record DoctorsAppointmentsDto(Guid DoctorId, Guid PatientId,  Period period);
 
 
 

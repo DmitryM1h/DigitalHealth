@@ -69,12 +69,12 @@ public class ScheduleService : IScheduleService
 
 
 
-    public async Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, YearMonth yearMonth)
+    public async Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, DateTime month)
     {
 
-        var daysInMonth = DateTime.DaysInMonth(yearMonth.Year, yearMonth.Month);
+        var daysInMonth = DateTime.DaysInMonth(month.Year, month.Month);
 
-        var period = Period.Create(new DateTime(yearMonth.Year, yearMonth.Month, 1), new DateTime(yearMonth.Year, yearMonth.Month, daysInMonth));
+        var period = Period.Create(new DateTime(month.Year, month.Month, 1), new DateTime(month.Year, month.Month, daysInMonth));
 
         var appointments = await _appointmentDataSource.GetAppointmentsForPeriodAsync(doctorId, period) ?? [];
         var doctorsBlocks = await _calendarBlockDataSource.GetDoctorsCalendarBlocksForPeriodAsync(doctorId, period) ?? [];
@@ -91,7 +91,7 @@ public class ScheduleService : IScheduleService
         {
             List<Slot> slots = [];
 
-            var date = new DateTime(yearMonth.Year, yearMonth.Month, day);
+            var date = new DateTime(month.Year, month.Month, day);
 
             var workingHours = doctorSchedule.GetWorkingHoursForDay(date);
 

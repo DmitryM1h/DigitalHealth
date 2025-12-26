@@ -4,5 +4,5 @@ namespace Domain.Interfaces;
 
 public interface IScheduleService
 {
-    public Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, YearMonth month);
+    public Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, DateTime month);
 }

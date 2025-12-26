@@ -11,8 +11,12 @@ public partial class Patient : IEntity<Guid>
     }
     public Guid Id { get; init; }
 
-    public IReadOnlyCollection<Doctor> doctors { get; set; } = [];
-    public IReadOnlyCollection<Appointment> Appointments { get; set; } = [];
+
+    private List<Doctor> _doctors = new List<Doctor>();
+    private List<Appointment> _appointments = new List<Appointment>();
+
+    public IReadOnlyCollection<Doctor> Doctors => _doctors.AsReadOnly();
+    public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
 
 
     public Guid? MedicalRecordId { get; set; }

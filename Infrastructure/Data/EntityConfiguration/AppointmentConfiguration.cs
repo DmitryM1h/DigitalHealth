@@ -9,15 +9,16 @@ namespace Infrastructure.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Appointment> builder)
         {
-            builder.HasKey(t => t.Id);
+            builder
+                .HasKey(t => t.Id);
 
-            builder.HasOne(t => t.Doctor)
+            builder
+                .HasOne(t => t.Doctor)
                 .WithMany(t => t.Appointments)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(t => t.Patient)
                 .WithMany(t => t.Appointments)
-                //.HasForeignKey(t => t.PatientId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.ComplexProperty(t => t.EventPeriod);

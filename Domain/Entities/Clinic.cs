@@ -9,13 +9,13 @@ public class Clinic : IEntity<Guid>, IAggregateRoot<Guid>
     public string City { get; private set; } = null!;
     public string Address { get; private set; } = null!;
 
-    public IReadOnlyCollection<Doctor> Doctors => _doctor.AsReadOnly();
+    public IReadOnlyCollection<Doctor> Doctors => _doctors.AsReadOnly();
 
-    private List<Doctor> _doctor = new List<Doctor>();
+    private List<Doctor> _doctors = new List<Doctor>();
 
     public void HireDoctor(Doctor doctor)
     {
-        _doctor.Add(doctor);
+        _doctors.Add(doctor);
     }
 
     public static Clinic Create(string city, string address)

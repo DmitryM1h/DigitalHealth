@@ -7,8 +7,12 @@ public partial class Doctor : IEntity<Guid>
 
     public Guid Id { get; init; }
 
-    public IReadOnlyCollection<Appointment> Appointments { get; private set; } = [];
-    public IReadOnlyCollection<Patient> Patients { get; private set; } = [];
+    private List<Appointment> _appointments = new List<Appointment>();
+
+    private List<Patient> _patients = new List<Patient>();
+
+    public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
+    public IReadOnlyCollection<Patient> Patients => _patients.AsReadOnly();
 
     public string Specialty { get; private set; } = null!;
     public int Capacity { get; private set; }
@@ -33,8 +37,8 @@ public partial class Doctor : IEntity<Guid>
         Capacity = capacity;
         Clinic = clinic;
         DoctorInfo = doctorInfo;
-        Appointments = new List<Appointment>();
-        Patients = new List<Patient>();
+        _appointments = new List<Appointment>();
+        _patients = new List<Patient>();
     }
 
 
@@ -48,8 +52,8 @@ public partial class Doctor : IEntity<Guid>
             Specialty = specialty,
             Capacity = capacity,
             ClinicId = clinicId,
-            Appointments = new List<Appointment>(),
-            Patients = new List<Patient>()
+            _appointments = new List<Appointment>(),
+            _patients = new List<Patient>()
         };
     }
 
