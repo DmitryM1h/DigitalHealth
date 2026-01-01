@@ -2,7 +2,7 @@
 using Domain.Entities;
 
 
-
+public record HireDoctorDto(string FullName, string specialty, int capacity);
 public class Clinic : IAggregateRoot<Guid>, IEntity<Guid>
 {
     public Guid Id { get; init; }// абстрактный коласс
@@ -13,8 +13,10 @@ public class Clinic : IAggregateRoot<Guid>, IEntity<Guid>
 
     private List<Doctor> _doctors = new List<Doctor>();
 
-    public void HireDoctor(Doctor doctor)
+    public void HireDoctor(HireDoctorDto doctorDto)
     {
+        var doctor = Doctor.Create(this, doctorDto.FullName, doctorDto.specialty, doctorDto.capacity);
+
         _doctors.Add(doctor);
     }
 

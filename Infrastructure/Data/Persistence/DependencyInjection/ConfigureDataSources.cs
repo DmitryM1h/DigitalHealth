@@ -1,4 +1,6 @@
-﻿using Domain.Repository;
+﻿using DigitalHealth.Domain.Repository;
+using DigitalHealth.Infrastructure.Data.Persistence;
+using Domain.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -12,6 +14,7 @@ namespace Infrastructure.Data.Persistence.DependencyInjection
             .AddScoped<IAppointmentDataSource, AppointmentDataSource>()
             .AddScoped<ICalendarBlockDataSource, CalendarBlockDataSource>()
             .AddScoped<IScheduleDataSource, ScheduleDataSource>()
+            .AddScoped<IClinicDataSource, ClinicDataSource>()
             ;
 
 

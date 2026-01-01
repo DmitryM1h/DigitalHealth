@@ -1,7 +1,6 @@
 ﻿using Auth;
 using CSharpFunctionalExtensions;
-using DigitalHealth.Domain.DomainEvents;
-using Domain.Entities;
+using DigitalHealth.Auth.DomainEvents;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -9,11 +8,8 @@ using System.Security.Claims;
 namespace DigitalHealth.Auth
 {
     public record LoginDto(string Email, string Password);
-    public record RegisterDoctorDto(string UserName, string Email, string Password, string PhoneNumber);
+    public record RegisterDoctorDto(string UserName, string Email, string Password, string PhoneNumber, Guid ClinicId, string Specialty, int Capacity);
 
-
-    public record RegisterCandidateResponse(string UserName, DateOnly? BirthDay, string? Specialty, string? Degree, int? GraduationYear,
-        string Email, string? Telegram, string? WorkExperience, string Password, string PhoneNumber);
 
 
     public class AuthService(SignInManager<User> signInManager,
@@ -43,25 +39,25 @@ namespace DigitalHealth.Auth
         }
 
 
-        public async Task<Result> RegisterDoctorAsync(RegisterDoctorDto regRequest, CancellationToken token)
+        public async Task<Result<User>> RegisterUserAsync(RegisterDoctorDto regRequest, Role role, CancellationToken token)
         {
             var user = new User {UserName = regRequest.UserName, Email = regRequest.Email, PhoneNumber = regRequest.PhoneNumber};
 
             var userExists = await userManager.FindByEmailAsync(regRequest.Email);
 
             if (userExists is not null)
-                return Result.Failure("User is present in the system");
+                return Result.Failure<User>("User is not present in the system");
 
             var result = await userManager.CreateAsync(user, regRequest.Password);
 
             if (!result.Succeeded)
                 return Result.Failure<User>(result.Errors.First().Description.ToString());
 
-            await AddToRole(user, nameof(Doctor));
+            await AddToRole(user, role.ToString());
 
             var registredUser = await userManager.FindByEmailAsync(regRequest.Email);
 
-            registredUser!.RaiseDomainEvent(new UserRegistredDomainEvent(registredUser.Id));
+            registredUser!.RaiseDomainEvent(new UserRegistredEvent());
 
             return Result.Success(registredUser);
         }

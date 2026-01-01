@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public partial class Doctor : IEntity<Guid>
+public class Doctor : IEntity<Guid>
 {
 
     public Guid Id { get; init; }
@@ -19,7 +19,6 @@ public partial class Doctor : IEntity<Guid>
     public int Capacity { get; private set; }
 
 
-    public Guid ClinicId { get; private set; }
     public Clinic Clinic { get; private set; } = null!;
     public DoctorInfo? DoctorInfo { get; private set; }
     public Guid? DoctorInfoId { get; private set; }
@@ -43,21 +42,21 @@ public partial class Doctor : IEntity<Guid>
     }
 
 
-    public static Doctor Create(Guid clinicId,
+    public static Doctor Create(Clinic clinic,
+       string fullName,
        string specialty,
        int capacity)
     {
         return new Doctor
         {
-            Id = Guid.NewGuid(),
+            Clinic = clinic,
+            FullName = fullName,
             Specialty = specialty,
             Capacity = capacity,
-            ClinicId = clinicId,
             _appointments = new List<Appointment>(),
             _patients = new List<Patient>()
         };
     }
-
 
 }
 

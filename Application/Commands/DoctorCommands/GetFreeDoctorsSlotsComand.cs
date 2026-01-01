@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands
+namespace DigitalHealth.Application.Commands.DoctorCommands
 {
     public record struct GetDoctorsFreeSlotsCommand(Guid DoctorId, Period period) : IRequest<IEnumerable<Slot>>;
 

@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\DigitalHealth.Application.csproj" />
     <ProjectReference Include="..\Auth\DigitalHealth.Auth.csproj" />
-    <ProjectReference Include="..\Core\DigitalHealth.Core.csproj" />
     <ProjectReference Include="..\Domain\DigitalHealth.Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\DigitalHealth.Infrastructure.csproj" />
   </ItemGroup>

@@ -10,7 +10,7 @@
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.21" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Domain\DigitalHealth.Domain.csproj" />
+	  <ProjectReference Include="..\DigitalHealth.Shared\DigitalHealth.Shared.csproj" />
 	</ItemGroup>
 
 </Project>

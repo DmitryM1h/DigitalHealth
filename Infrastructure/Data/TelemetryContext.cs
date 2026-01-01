@@ -31,7 +31,7 @@ public class TelemetryContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         modelBuilder.Entity<Clinic>(t => t.HasData(ClinicConfiguration.SeedClinics()));
-        modelBuilder.Entity<Doctor>(t => t.HasData(DoctorConfiguration.SeedDoctors()));
+        //modelBuilder.Entity<Doctor>(t => t.HasData(DoctorConfiguration.SeedDoctors()));
     }
 
 

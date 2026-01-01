@@ -1,6 +1,5 @@
 ﻿
-using Core.Contracts;
-using DigitalHealth.Domain.Interfaces;
+using DigitalHealth.Auth.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Auth;
