@@ -2,7 +2,7 @@
 
 namespace Domain.Repository
 {
-    public interface IDoctorDataSource
+    public interface IDoctorRepository
     {
         public Task<Doctor?> GetDoctorById(Guid id);
 

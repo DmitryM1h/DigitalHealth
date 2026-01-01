@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Persistence;
 
-public class DoctorDataSource(TelemetryContext dbContext) : IDoctorDataSource
+public class DoctorDataSource(TelemetryContext dbContext) : IDoctorRepository
 {
     public async Task<Doctor?> GetDoctorById(Guid id)
     {

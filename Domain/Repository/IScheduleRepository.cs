@@ -2,7 +2,7 @@
 
 namespace Domain.Repository;
 
-public interface IScheduleDataSource
+public interface IScheduleRepository
 {
     public Task<WorkSchedule?> GetDoctorsWorkingSchedule(Guid doctorId);
 

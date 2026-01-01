@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Persistence
 {
-    public class AppointmentDataSource(TelemetryContext dbContext) : IAppointmentDataSource
+    public class AppointmentDataSource(TelemetryContext dbContext) : IAppointmentRepository
     {
         public Task CreateAppointmentAsync(Guid userId, Guid doctorId, Period period)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Persistence
 {
-    public class ScheduleDataSource(TelemetryContext dbContext) : IScheduleDataSource
+    public class ScheduleDataSource(TelemetryContext dbContext) : IScheduleRepository
     {
         public async Task<WorkSchedule?> GetDoctorsWorkingSchedule(Guid doctorId)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DigitalHealth.Domain.Repository
 {
-    public interface IClinicDataSource
+    public interface IClinicRepository
     {
         public Task<Clinic?> GetClinicAsync(Guid clinicId);
         public Task SaveChangesAsync();

@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="3.6.0" />
     <PackageReference Include="MediatR" Version="13.1.0" />
   </ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\DigitalHealth.Shared\DigitalHealth.Shared.csproj" />
 		<ProjectReference Include="..\Domain\DigitalHealth.Domain.csproj" />
 		<ProjectReference Include="..\Infrastructure\DigitalHealth.Infrastructure.csproj" />
 	</ItemGroup>

@@ -14,7 +14,7 @@ namespace DigitalHealth.Application.Commands.Auth
     public record RegisterDoctorCommand(string UserName, string Email, string Password, string PhoneNumber, Guid clinicId, string Specialty, int capacity): IRequest<Result>;
 
 
-    public class RegisterDoctorCommandHandler(AuthService _authService, IClinicDataSource _clinicRepository, IMediator _mediator) : IRequestHandler<RegisterDoctorCommand, Result>
+    public class RegisterDoctorCommandHandler(AuthService _authService, IClinicRepository _clinicRepository, IMediator _mediator) : IRequestHandler<RegisterDoctorCommand, Result>
     {
         public async Task<Result> Handle(RegisterDoctorCommand request, CancellationToken cancellationToken)
         {

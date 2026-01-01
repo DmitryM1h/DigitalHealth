@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DigitalHealth.Infrastructure.Data.Persistence
 {
-    public class ClinicDataSource(TelemetryContext _telemetryContext) : IClinicDataSource
+    public class ClinicDataSource(TelemetryContext _telemetryContext) : IClinicRepository
     {
         public async Task<Clinic?> GetClinicAsync(Guid clinicId)
         {

@@ -4,7 +4,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Repository
 {
-    public interface ICalendarBlockDataSource
+    public interface ICalendarBlockRepository
     {
 
         public Task<List<CalendarBlock>> GetDoctorsCalendarBlocks(Guid doctorId);

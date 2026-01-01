@@ -9,11 +9,11 @@ public class ScheduleService : IScheduleService
 {
     public const int MinimumSlotDuration = 10;
 
-    private IAppointmentDataSource _appointmentDataSource;
-    private IScheduleDataSource _scheduleDataSource;
-    private ICalendarBlockDataSource _calendarBlockDataSource;
+    private IAppointmentRepository _appointmentDataSource;
+    private IScheduleRepository _scheduleDataSource;
+    private ICalendarBlockRepository _calendarBlockDataSource;
 
-    public ScheduleService(IAppointmentDataSource appointmentDataSource, IScheduleDataSource scheduleDataSource, ICalendarBlockDataSource calendarBlockDataSource)
+    public ScheduleService(IAppointmentRepository appointmentDataSource, IScheduleRepository scheduleDataSource, ICalendarBlockRepository calendarBlockDataSource)
     {
         _appointmentDataSource = appointmentDataSource;
         _scheduleDataSource = scheduleDataSource;

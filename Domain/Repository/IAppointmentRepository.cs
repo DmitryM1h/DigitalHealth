@@ -4,7 +4,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Repository
 {
-    public interface IAppointmentDataSource
+    public interface IAppointmentRepository
     {
 
         public Task<List<Appointment>> GetAppointmentsAsync(Guid userID);

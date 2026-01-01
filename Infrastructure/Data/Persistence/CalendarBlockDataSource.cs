@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Persistence
 {
-    public class CalendarBlockDataSource(TelemetryContext dbContext) : ICalendarBlockDataSource
+    public class CalendarBlockDataSource(TelemetryContext dbContext) : ICalendarBlockRepository
     {
         public Task<List<CalendarBlock>> GetDoctorsCalendarBlocks(Guid doctorId)
         {

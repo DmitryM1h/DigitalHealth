@@ -8,7 +8,7 @@ using Infrastructure.Data;
 namespace DigitalHealth.Application.EventHandlers;
 
 
-public class DoctorRegistredEventHandler(IClinicDataSource _clinicRepository) : INotificationHandler<DoctorRegisteredIntegrationEvent>
+public class DoctorRegistredEventHandler(IClinicRepository _clinicRepository) : INotificationHandler<DoctorRegisteredIntegrationEvent>
 {
 
     public async Task Handle(DoctorRegisteredIntegrationEvent notification, CancellationToken cancellationToken)

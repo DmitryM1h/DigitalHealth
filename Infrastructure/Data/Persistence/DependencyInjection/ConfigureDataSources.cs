@@ -10,11 +10,11 @@ namespace Infrastructure.Data.Persistence.DependencyInjection
     {
         public static IServiceCollection AddDataSources(this IServiceCollection services)
             => services
-            .AddScoped<IDoctorDataSource, DoctorDataSource>()
-            .AddScoped<IAppointmentDataSource, AppointmentDataSource>()
-            .AddScoped<ICalendarBlockDataSource, CalendarBlockDataSource>()
-            .AddScoped<IScheduleDataSource, ScheduleDataSource>()
-            .AddScoped<IClinicDataSource, ClinicDataSource>()
+            .AddScoped<IDoctorRepository, DoctorDataSource>()
+            .AddScoped<IAppointmentRepository, AppointmentDataSource>()
+            .AddScoped<ICalendarBlockRepository, CalendarBlockDataSource>()
+            .AddScoped<IScheduleRepository, ScheduleDataSource>()
+            .AddScoped<IClinicRepository, ClinicDataSource>()
             ;
 
 

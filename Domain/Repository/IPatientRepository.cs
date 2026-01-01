@@ -1,6 +1,6 @@
 ﻿namespace Domain.Repository
 {
-    public interface IPatientDataSource
+    public interface IPatientRepository
     {
 
     }
