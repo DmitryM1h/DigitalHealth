@@ -1,4 +1,5 @@
 ﻿using Auth;
+using DigitalHealth.Auth;
 using Infrastructure.Configuration;
 using Infrastructure.Data;
 using Infrastructure.Data.Persistence.DependencyInjection;
@@ -18,6 +19,7 @@ builder.Services.AddDatabaseContext()
 
 builder.Services.AddDataSources();
 builder.Services.AddMediatr();
+builder.Services.AddAuth(builder.Configuration);
 
 
 

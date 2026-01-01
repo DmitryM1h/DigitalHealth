@@ -10,7 +10,7 @@ public partial class Patient : IEntity<Guid>
     {
     }
     public Guid Id { get; init; }
-
+    public string FullName { get; init; }
 
     private List<Doctor> _doctors = new List<Doctor>();
     private List<Appointment> _appointments = new List<Appointment>();

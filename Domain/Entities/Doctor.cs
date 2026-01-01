@@ -6,6 +6,7 @@ public partial class Doctor : IEntity<Guid>
 {
 
     public Guid Id { get; init; }
+    public string FullName { get; init; }
 
     private List<Appointment> _appointments = new List<Appointment>();
 

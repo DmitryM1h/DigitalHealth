@@ -3,7 +3,7 @@ using Domain.Entities;
 
 
 
-public class Clinic : IEntity<Guid>, IAggregateRoot<Guid>
+public class Clinic : IAggregateRoot<Guid>, IEntity<Guid>
 {
     public Guid Id { get; init; }// абстрактный коласс
     public string City { get; private set; } = null!;

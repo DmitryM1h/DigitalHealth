@@ -1,4 +1,6 @@
 ﻿using Application.Commands;
+using DigitalHealth.Application.Commands.Auth;
+using DigitalHealth.Auth;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.ValueObjects;
@@ -24,7 +26,7 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     }
 
     [HttpGet("Schedule")]
-    public ActionResult<WorkSchedule> GetDoctorsSchedule(Guid doctorId)
+    public ActionResult<WorkSchedule> GetDoctorsSchedule([FromQuery] Guid doctorId)
     {
         var schedule = dbContext.WorkSchedules.Where(t => t.Doctor.Id == doctorId).FirstOrDefault();
 
@@ -39,6 +41,25 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
 
         return await scheduleService.GetDoctorFreeGapsAsync(doctorId, date);
     }
+
+
+    [HttpPost("Register")]
+    public async Task<ActionResult> RegisterDoctor([FromBody] RegisterDoctorDto registerDoctorRequest)
+    {
+        // Сгенерить пароль, потом отправить его доктору на почту. Дать возможность сменить
+        var command = new RegisterDoctorCommand(registerDoctorRequest.UserName, registerDoctorRequest.Email, registerDoctorRequest.Password, registerDoctorRequest.PhoneNumber);
+
+        var result = await mediator.Send(command);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok();
+
+    }
+
 
     [HttpGet("Appointments")]
     public async Task<IEnumerable<DoctorsAppointmentsDto>> GetDoctorsAppointments([FromQuery] Guid doctorId)

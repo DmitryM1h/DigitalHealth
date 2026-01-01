@@ -20,55 +20,6 @@ public class ScheduleService : IScheduleService
         _calendarBlockDataSource = calendarBlockDataSource;
     }
 
-    //public async Task<Schedule> GetDoctorScheduleAsync(Guid doctorId, Period period)
-    //{
-    //    var appointments = await _appointmentDataSource.GetAppointmentsForPeriodAsync(doctorId, period) ?? [];
-    //    var doctorsBlocks = await _calendarBlockDataSource.GetDoctorsCalendarBlocksForPeriodAsync(doctorId, period) ?? [];
-
-    //    var blockedPeriods = appointments.Select(t => new { t.EventPeriod.StartDate, t.EventPeriod.EndDate})
-    //        .Concat(doctorsBlocks.Select(t => new { t.period.StartDate, t.period.EndDate }))
-    //        .ToList();
-
-    //    var doctorSchedule = await _scheduleDataSource.GetDoctorsWorkingSchedule(doctorId);
-
-    //    List<Slot> slots = [];
-
-    //    if (blockedPeriods.Count == 0)
-    //    {
-    //        slots.Add(new Slot(period));
-    //        return Schedule.Create(slots, doctorId, period);
-    //    }
-
-    //    foreach (var calendarEventsByDate in blockedPeriods.GroupBy(t => t.StartDate.Date))
-    //    {
-    //        var workingHours = doctorSchedule.GetWorkingHoursForDay(calendarEventsByDate.Key.Date);
-
-    //        if (!workingHours.IsWorkingDay())
-    //            continue;
-
-
-    //        var currStartDate = GetBeginningOfWorkingDay(DateOnly.FromDateTime(calendarEventsByDate.Key), workingHours!.StartDate!.Value);
-
-    //        foreach (var calendarEvent in calendarEventsByDate.OrderBy(t => t.StartDate))
-    //        {
-
-    //            CreateSlotIfValid(currStartDate, calendarEvent.StartDate, slots);
-
-    //            currStartDate = calendarEvent.EndDate;
-    //        }
-
-    //        var endOfWorkingDay = calendarEventsByDate.Key.Date + workingHours!.EndDate!.Value.ToTimeSpan();
-
-    //        CreateSlotIfValid(currStartDate, endOfWorkingDay, slots);
-
-    //    }
-    //    return Schedule.Create(slots, doctorId, period);
-
-
-    //}
-
-
-
     public async Task<Schedule> GetDoctorFreeGapsAsync(Guid doctorId, DateTime month)
     {
 
@@ -142,7 +93,7 @@ public class ScheduleService : IScheduleService
     }
 
     public static DateTime GetBeginningOfWorkingDay(DateOnly eventDate, TimeOnly startingHours) => GetDateTimeFromDateAndHours(eventDate, startingHours);
-    public static DateTime GetEndingOfWorkingDay(DateOnly eventDate, TimeOnly startingHours) => GetDateTimeFromDateAndHours(eventDate, startingHours);
+    public static DateTime GetEndingOfWorkingDay(DateOnly eventDate, TimeOnly endingHours) => GetDateTimeFromDateAndHours(eventDate, endingHours);
 
 
     public static DateTime GetDateTimeFromDateAndHours(DateOnly eventDate, TimeOnly hours)

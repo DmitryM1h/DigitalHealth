@@ -1,6 +1,6 @@
 ﻿using Core.Contracts;
 
-namespace DigitalHealth.Domain.Interfaces
+namespace DigitalHealth.Domain.Repository
 {
     public interface IRepository<TEntity, TId> where TEntity : IAggregateRoot<TId>
     {

@@ -10,10 +10,13 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
     public void Configure(EntityTypeBuilder<Patient> builder)
     {
 
-        builder.HasKey(t => t.Id);
+        builder
+            .HasKey(t => t.Id);
 
-        builder.HasOne(t => t.MedicalRecord)
-        .WithOne().HasForeignKey<Patient>(t => t.MedicalRecordId);
+        builder
+            .HasOne(t => t.MedicalRecord)
+            .WithOne()
+            .HasForeignKey<Patient>(t => t.MedicalRecordId);
 
     }
 }
