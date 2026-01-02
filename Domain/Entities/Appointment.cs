@@ -15,6 +15,11 @@ namespace Domain.Entities
 
         public Appointment() { }
 
+        public Appointment(Period eventPeriod)
+        {
+            EventPeriod = eventPeriod;
+        }
+
 
     }
 }

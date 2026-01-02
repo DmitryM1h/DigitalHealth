@@ -1,6 +1,5 @@
 ﻿using Auth;
 using CSharpFunctionalExtensions;
-using DigitalHealth.Auth.DomainEvents;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -57,9 +56,7 @@ namespace DigitalHealth.Auth
 
             var registredUser = await userManager.FindByEmailAsync(regRequest.Email);
 
-            registredUser!.RaiseDomainEvent(new UserRegistredEvent());
-
-            return Result.Success(registredUser);
+            return Result.Success(registredUser!);
         }
 
         //public async Task<Result> RegisterPatientAsync(RegisterHrDto regRequest, CancellationToken token)

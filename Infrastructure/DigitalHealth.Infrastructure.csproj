@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Domain\DigitalHealth.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Email\" />
+  </ItemGroup>
+
 </Project>
