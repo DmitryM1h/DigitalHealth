@@ -15,6 +15,7 @@ namespace Infrastructure.Data.Persistence.DependencyInjection
             .AddScoped<ICalendarBlockRepository, CalendarBlockDataSource>()
             .AddScoped<IScheduleRepository, ScheduleDataSource>()
             .AddScoped<IClinicRepository, ClinicDataSource>()
+            .AddScoped<IPatientRepository, PatientRepository>()
             ;
 
 

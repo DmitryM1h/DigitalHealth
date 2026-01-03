@@ -25,30 +25,17 @@ public class Doctor : IEntity<Guid>
 
 
     private Doctor() { }
-    public Doctor(
-     string specialty,
-     int capacity,
-     Clinic clinic,
-     DoctorInfo doctorInfo)
-    {
 
-        Id = Guid.NewGuid();
-        Specialty = specialty;
-        Capacity = capacity;
-        Clinic = clinic;
-        DoctorInfo = doctorInfo;
-        _appointments = new List<Appointment>();
-        _patients = new List<Patient>();
-    }
+ 
 
-
-    public static Doctor Create(Clinic clinic,
+    public static Doctor Create(Guid Id, Clinic clinic,
        string fullName,
        string specialty,
        int capacity)
     {
         return new Doctor
         {
+            Id = Id,
             Clinic = clinic,
             FullName = fullName,
             Specialty = specialty,

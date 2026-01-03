@@ -1,13 +1,11 @@
 ﻿using DigitalHealth.Application.Commands.Auth;
-using DigitalHealth.Auth;
+using DigitalHealth.Application.Requests.Auth;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.ValueObjects;
 using Infrastructure.Data;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalHealth.Controllers;
@@ -45,7 +43,7 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
 
     [HttpPost("Register")]
     //[Authorize(nameof(Role.Administrator))]
-    public async Task<ActionResult> RegisterDoctor([FromBody] RegisterDoctorDto registerDoctorRequest)
+    public async Task<ActionResult> RegisterDoctor([FromBody] RegisterDoctorRequest registerDoctorRequest)
     {
         // Сгенерить пароль, потом отправить его доктору на почту. Дать возможность сменить
         var command = new RegisterDoctorCommand(registerDoctorRequest.UserName, registerDoctorRequest.Email, registerDoctorRequest.Password, registerDoctorRequest.PhoneNumber, registerDoctorRequest.ClinicId, registerDoctorRequest.Specialty, registerDoctorRequest.Capacity);

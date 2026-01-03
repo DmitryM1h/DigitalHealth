@@ -15,7 +15,7 @@ public class DoctorRegistredEventHandler(IClinicRepository _clinicRepository) : 
     {
         var clinic = await _clinicRepository.GetClinicAsync(notification.ClinicId);
 
-        var doctorDto = new HireDoctorDto(notification.FullName, notification.Specialty, notification.Capacity);
+        var doctorDto = new HireDoctorDto(notification.DoctorId, notification.FullName, notification.Specialty, notification.Capacity);
 
         clinic!.HireDoctor(doctorDto);
 

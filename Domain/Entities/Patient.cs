@@ -6,9 +6,7 @@ namespace Domain.Entities;
 
 public partial class Patient : IEntity<Guid>
 {
-    public Patient()
-    {
-    }
+  
     public Guid Id { get; init; }
     public string FullName { get; init; }
 
@@ -22,6 +20,18 @@ public partial class Patient : IEntity<Guid>
     public Guid? MedicalRecordId { get; set; }
     public MedicalRecord? MedicalRecord { get; set; }
 
+    public static Patient Create(Guid Id, string FullName)
+    {
+        return new Patient
+        {
+            Id = Id,
+            FullName = FullName,
+        };
+    }
+
+    private Patient()
+    {
+    }
 
 }
 

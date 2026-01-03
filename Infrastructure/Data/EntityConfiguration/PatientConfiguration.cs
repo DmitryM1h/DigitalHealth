@@ -14,6 +14,10 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .HasKey(t => t.Id);
 
         builder
+            .Property(t => t.Id)
+            .ValueGeneratedNever();
+
+        builder
             .HasOne(t => t.MedicalRecord)
             .WithOne()
             .HasForeignKey<Patient>(t => t.MedicalRecordId);

@@ -7,27 +7,25 @@ using System.Security.Claims;
 namespace DigitalHealth.Auth
 {
     public record LoginDto(string Email, string Password);
-    public record RegisterDoctorDto(string UserName, string Email, string Password, string PhoneNumber, Guid ClinicId, string Specialty, int Capacity);
-
-
+    public record RegisterUserRequest(string UserName, string Email, string Password, string PhoneNumber);
 
     public class AuthService(SignInManager<User> signInManager,
          UserManager<User> userManager,
          TokenGenerator tokenGenerator
          )
     {
-        public async Task<Result> LoginAsync(LoginDto logDto)
+        public async Task<Result<string>> LoginAsync(LoginDto logDto)
         {
             var user = await userManager.FindByEmailAsync(logDto.Email);
 
             if (user is null)
-                return Result.Failure("Invalid login or password");
+                return Result.Failure<string>("Invalid login or password");
 
 
             var p = await signInManager.CheckPasswordSignInAsync(user, logDto.Password, false);
 
             if (!p.Succeeded)
-                return Result.Failure("Invalid login or password");
+                return Result.Failure<string>("Invalid login or password");
 
             var claims = await GetUserClaimsAsync(user);
 
@@ -38,7 +36,7 @@ namespace DigitalHealth.Auth
         }
 
 
-        public async Task<Result<User>> RegisterUserAsync(RegisterDoctorDto regRequest, Role role, CancellationToken token)
+        public async Task<Result<User>> RegisterUserAsync(RegisterUserRequest regRequest, Role role, CancellationToken token)
         {
             var user = new User {UserName = regRequest.UserName, Email = regRequest.Email, PhoneNumber = regRequest.PhoneNumber};
 

@@ -12,8 +12,25 @@ namespace DigitalHealth.Controllers
     public class UserController(RoleManager<IdentityRole<Guid>> roleManager,
                                 UserManager<User> manager) : ControllerBase
     {
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<string>> Login([FromBody] LoginDto logDto, [FromServices] AuthService _authService)
+        {
+
+            var result = await _authService.LoginAsync(logDto);
+
+            if (result.IsFailure)
+                return BadRequest(result.Error);
+
+            var token = result.Value;
+
+            return Ok(token);
+        }
+
+
+
         [HttpPost("CreateRole")]
-        //[Authorize(Roles = nameof(Role.Administrator))]
+        [Authorize(Roles = nameof(Role.Administrator))]
         public async Task<IActionResult> CreateRole(string roleName)
         {
             if (!Enum.TryParse<Role>(roleName, out _))

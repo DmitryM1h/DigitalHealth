@@ -1,13 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
+using DigitalHealth.Application.Requests.Auth;
 using DigitalHealth.Auth;
 using DigitalHealth.Domain.DomainEvents;
 using DigitalHealth.Domain.Repository;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DigitalHealth.Application.Commands.Auth
 {
@@ -23,7 +20,7 @@ namespace DigitalHealth.Application.Commands.Auth
             if (!validationResult.IsSuccess)
                 return validationResult;
 
-            var regDto = new RegisterDoctorDto(request.UserName, request.Email, request.Password, request.PhoneNumber, request.clinicId, request.Specialty, request.capacity);
+            var regDto = new RegisterUserRequest(request.UserName, request.Email, request.Password, request.PhoneNumber);
 
             var result = await _authService.RegisterUserAsync(regDto, Role.Doctor, cancellationToken);
 
@@ -32,7 +29,7 @@ namespace DigitalHealth.Application.Commands.Auth
                 return result;
             }
 
-            await _mediator.Publish(new DoctorRegisteredIntegrationEvent(result.Value.UserName!, request.Specialty, request.capacity, request.clinicId));
+            await _mediator.Publish(new DoctorRegisteredIntegrationEvent(result.Value.Id, result.Value.UserName!, request.Specialty, request.capacity, request.clinicId));
             
             return Result.Success();
         }
