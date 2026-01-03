@@ -45,7 +45,6 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     //[Authorize(nameof(Role.Administrator))]
     public async Task<ActionResult> RegisterDoctor([FromBody] RegisterDoctorRequest registerDoctorRequest)
     {
-        // Сгенерить пароль, потом отправить его доктору на почту. Дать возможность сменить
         var command = new RegisterDoctorCommand(registerDoctorRequest.UserName, registerDoctorRequest.Email, registerDoctorRequest.Password, registerDoctorRequest.PhoneNumber, registerDoctorRequest.ClinicId, registerDoctorRequest.Specialty, registerDoctorRequest.Capacity);
 
         var result = await mediator.Send(command);

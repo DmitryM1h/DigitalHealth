@@ -56,36 +56,6 @@ namespace DigitalHealth.Auth
 
             return Result.Success(registredUser!);
         }
-
-        //public async Task<Result> RegisterPatientAsync(RegisterHrDto regRequest, CancellationToken token)
-        //{
-        //    var user = ApplicationUser.CreateFromRegisterDto(
-        //                                                UserName: regRequest.UserName,
-        //                                                BirthDay: regRequest.BirthDay,
-        //                                                Email: regRequest.Email,
-        //                                                Telegram: regRequest.Telegram,
-        //                                                Password: regRequest.Password,
-        //                                                PhoneNumber: regRequest.PhoneNumber
-        //                                            );
-
-        //    var result = await userManager.CreateAsync(user, regRequest.Password);
-
-        //    if (!result.Succeeded)
-        //        return new Result(false, result.Errors.First().Description.ToString());
-
-        //    await AddToRole(user, nameof(HrManager));
-
-
-        //    var hr = HrManager.CreateHr(user.Id, regRequest.Company);
-
-        //    await _hrManagerRepo.AddAsync(hr, token);
-
-        //    await _unitOfWork.SaveAsync(token);
-
-        //    return new Result(true, null);
-        //}
-
-
         private async Task AddToRole(User user, string Role)
         {
             await userManager.AddToRoleAsync(user, Role);
