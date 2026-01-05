@@ -13,7 +13,7 @@ namespace Infrastructure.Data.Persistence
     {
         public async Task<WorkSchedule?> GetDoctorsWorkingSchedule(Guid doctorId)
         {
-            return await dbContext.WorkSchedules.Where(t => t.Doctor.Id == doctorId).FirstOrDefaultAsync();
+            return await dbContext.Doctors.Where(t => t.Id == doctorId).Include(t => t.WorkSchedule).Select(t => t.WorkSchedule).FirstOrDefaultAsync();
         }
     }
 }

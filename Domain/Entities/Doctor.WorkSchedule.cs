@@ -8,8 +8,6 @@ public class WorkSchedule : IEntity<Guid>
 {
     public Guid Id { get; init; }
 
-    public Doctor Doctor { get; set; }
-
     public WorkingHours Monday { get; set; }
     public WorkingHours Tuesday { get; set; }
     public WorkingHours Thursday { get; set; }

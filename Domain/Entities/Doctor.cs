@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using DigitalHealth.Domain.DomainExceptions;
 using DigitalHealth.Domain.Extensions;
 using Domain.ValueObjects;
 
@@ -12,18 +13,16 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
 
     private List<Appointment> _appointments = new List<Appointment>();
 
-    //private List<Patient> _patients = new List<Patient>();
-
     private List<CalendarBlock> _calendarBlocks = new List<CalendarBlock>();
 
     public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
-    //public IReadOnlyCollection<Patient> Patients => _patients.AsReadOnly();
     public IReadOnlyCollection<CalendarBlock> CalendarBlocks => _calendarBlocks.AsReadOnly();
 
     public string Specialty { get; private set; } = null!;
     public int Capacity { get; private set; }
 
 
+    public WorkSchedule? WorkSchedule { get; private set; }
     public Clinic Clinic { get; private set; } = null!;
     public DoctorInfo? DoctorInfo { get; private set; }
     public Guid? DoctorInfoId { get; private set; }
@@ -39,9 +38,7 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
         var occupiedPeriods = appointmentsForMonth.Concat(blocksForMonth).ToList();
 
         if (occupiedPeriods.OverlapsWith(period))
-            throw new Exception();
-
-        //Appointment appointment = Appointment.Create(this, patient, period);
+            throw new DomainException("The slot is not available");
 
         _appointments.Add(appointment);
     }

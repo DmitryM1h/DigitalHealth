@@ -10,11 +10,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace DigitalHealth.Infrastructure.Migrations
 {
     [DbContext(typeof(TelemetryContext))]
-    [Migration("20251226202234_onemore")]
-    partial class onemore
+    [Migration("20260105223955_initialTelemetry")]
+    partial class initialTelemetry
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,21 +78,6 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DoctorPatient", b =>
-                {
-                    b.Property<Guid>("PatientsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("doctorsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("PatientsId", "doctorsId");
-
-                    b.HasIndex("doctorsId");
-
-                    b.ToTable("DoctorPatient", "Telemetry");
-                });
-
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -143,8 +128,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId")
-                        .IsUnique();
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("CalendarBlocks", "Telemetry");
                 });
@@ -152,7 +136,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("Capacity")
@@ -163,6 +146,10 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid?>("DoctorInfoId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Specialty")
                         .IsRequired()
@@ -176,148 +163,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Doctors", "Telemetry");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("31efc166-6952-4bdf-8b41-9e671d8e0172"),
-                            Capacity = 29,
-                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
-                            Specialty = "Orthopedics"
-                        },
-                        new
-                        {
-                            Id = new Guid("2ca9e97a-9579-4e60-b16c-646fde1bcdca"),
-                            Capacity = 19,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Pediatrics"
-                        },
-                        new
-                        {
-                            Id = new Guid("d6d1083b-5584-413f-90ec-39fa45cdc0c0"),
-                            Capacity = 39,
-                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
-                            Specialty = "Dermatology"
-                        },
-                        new
-                        {
-                            Id = new Guid("c986b63d-ac03-4ac8-9382-3c20a88728b6"),
-                            Capacity = 33,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Dermatology"
-                        },
-                        new
-                        {
-                            Id = new Guid("f095151b-0ad7-4750-a289-0f209021bfe0"),
-                            Capacity = 28,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Neurology"
-                        },
-                        new
-                        {
-                            Id = new Guid("160577c6-94f9-4f39-8ab1-18211e448484"),
-                            Capacity = 30,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Surgery"
-                        },
-                        new
-                        {
-                            Id = new Guid("3c08352b-35cd-4ec0-9f1f-589b574ef97a"),
-                            Capacity = 7,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Psychiatry"
-                        },
-                        new
-                        {
-                            Id = new Guid("d4b7811c-a7ce-4e4b-8734-df0dd7ca3a0e"),
-                            Capacity = 33,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Cardiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("cf8ae6cc-ba76-4384-abb7-a94b52f155e7"),
-                            Capacity = 27,
-                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
-                            Specialty = "Oncology"
-                        },
-                        new
-                        {
-                            Id = new Guid("249d42c7-e8c1-45a5-86c5-54e9a3fdbadc"),
-                            Capacity = 5,
-                            ClinicId = new Guid("34444444-4444-4444-4444-444444444444"),
-                            Specialty = "Cardiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("242d0a32-87ef-4f13-81b4-bee8c1a6ed32"),
-                            Capacity = 23,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("71b77986-aa73-442a-a25f-a7c523b9465c"),
-                            Capacity = 7,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Oncology"
-                        },
-                        new
-                        {
-                            Id = new Guid("5ad8ad11-bcd4-4fb7-8d1c-1ea7d3b93341"),
-                            Capacity = 11,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("cc6b4cf4-a13b-49fa-83f6-651cc4f8b1c4"),
-                            Capacity = 17,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Psychiatry"
-                        },
-                        new
-                        {
-                            Id = new Guid("3857df71-cc3b-45d1-9531-29e178451f02"),
-                            Capacity = 6,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Cardiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("141694e8-0303-4bbf-a8d5-97a8122d69ad"),
-                            Capacity = 19,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Cardiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("9382e511-8508-453b-b561-10be2b9f580f"),
-                            Capacity = 13,
-                            ClinicId = new Guid("44444444-4444-4444-4444-444444444444"),
-                            Specialty = "Dermatology"
-                        },
-                        new
-                        {
-                            Id = new Guid("dd40d06c-a281-49ca-bc4d-88041a737ca0"),
-                            Capacity = 37,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Ophthalmology"
-                        },
-                        new
-                        {
-                            Id = new Guid("fe29003c-efee-4504-aa95-682d63e4051b"),
-                            Capacity = 17,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Radiology"
-                        },
-                        new
-                        {
-                            Id = new Guid("eee5db30-095e-4d08-9b2f-79e359c591c4"),
-                            Capacity = 31,
-                            ClinicId = new Guid("24444444-4444-4444-4444-444444444444"),
-                            Specialty = "Neurology"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.DoctorInfo", b =>
@@ -363,8 +208,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Patient", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("MedicalRecordId")
                         .HasColumnType("uuid");
@@ -380,6 +228,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.WorkSchedule", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.ComplexProperty<Dictionary<string, object>>("Friday", "Domain.Entities.WorkSchedule.Friday#WorkingHours", b1 =>
@@ -464,21 +313,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("WorkSchedules", "Telemetry");
                 });
 
-            modelBuilder.Entity("DoctorPatient", b =>
-                {
-                    b.HasOne("Domain.Entities.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("doctorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
@@ -501,8 +335,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.CalendarBlock", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.CalendarBlock", "DoctorId")
+                        .WithMany("CalendarBlocks")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -544,9 +378,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Entities.Doctor", "DoctorInfoId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Domain.Entities.WorkSchedule", "WorkSchedule")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Doctor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Clinic");
 
                     b.Navigation("DoctorInfo");
+
+                    b.Navigation("WorkSchedule");
                 });
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>
@@ -558,17 +400,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("MedicalRecord");
                 });
 
-            modelBuilder.Entity("Domain.Entities.WorkSchedule", b =>
-                {
-                    b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.WorkSchedule", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("Clinic", b =>
                 {
                     b.Navigation("Doctors");
@@ -577,6 +408,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("CalendarBlocks");
                 });
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>

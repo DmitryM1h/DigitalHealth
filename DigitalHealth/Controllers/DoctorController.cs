@@ -26,7 +26,7 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
     [HttpGet("Schedule")]
     public ActionResult<WorkSchedule> GetDoctorsSchedule([FromQuery] Guid doctorId)
     {
-        var schedule = dbContext.WorkSchedules.Where(t => t.Doctor.Id == doctorId).FirstOrDefault();
+        var schedule = dbContext.Doctors.Where(t => t.Id == doctorId).Include(t => t.WorkSchedule).Select( t=> t.WorkSchedule).FirstOrDefault();
 
         var response = new {schedule?.Monday, schedule?.Tuesday, schedule?.Thursday, schedule?.Wednesday, schedule?.Friday, schedule?.Saturday, schedule?.Sunday};
         return Ok(response);

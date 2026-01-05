@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using DigitalHealth.Domain.DomainExceptions;
 using DigitalHealth.Domain.Extensions;
 using Domain.ValueObjects;
 
@@ -17,6 +18,7 @@ public partial class Patient : IEntity<Guid>
     public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
 
 
+    //Убрать id
     public Guid? MedicalRecordId { get; set; }
     public MedicalRecord? MedicalRecord { get; set; }
 
@@ -26,7 +28,7 @@ public partial class Patient : IEntity<Guid>
         var appointmentsForMonth = _appointments.Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month).Select(t => t.EventPeriod).ToList();
 
         if (appointmentsForMonth.OverlapsWith(period))
-            throw new Exception();
+            throw new DomainException("The slot is not available");
 
         Appointment appointment = Appointment.Create(doctor, this, period);
 

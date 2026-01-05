@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace DigitalHealth.Infrastructure.Migrations
 {
     [DbContext(typeof(TelemetryContext))]
     partial class TelemetryContextModelSnapshot : ModelSnapshot
@@ -225,6 +225,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.WorkSchedule", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.ComplexProperty<Dictionary<string, object>>("Friday", "Domain.Entities.WorkSchedule.Friday#WorkingHours", b1 =>
@@ -374,9 +375,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Entities.Doctor", "DoctorInfoId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Domain.Entities.WorkSchedule", "WorkSchedule")
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Doctor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Clinic");
 
                     b.Navigation("DoctorInfo");
+
+                    b.Navigation("WorkSchedule");
                 });
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>
@@ -386,17 +395,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Entities.Patient", "MedicalRecordId");
 
                     b.Navigation("MedicalRecord");
-                });
-
-            modelBuilder.Entity("Domain.Entities.WorkSchedule", b =>
-                {
-                    b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.WorkSchedule", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("Clinic", b =>

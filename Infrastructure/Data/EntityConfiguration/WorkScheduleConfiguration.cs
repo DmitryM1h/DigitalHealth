@@ -16,11 +16,6 @@ public class WorkScheduleConfiguration : IEntityTypeConfiguration<WorkSchedule>
     {
         builder.HasKey(t => t.Id);
 
-        builder.HasOne(t => t.Doctor)
-            .WithOne()
-            .HasForeignKey<WorkSchedule>(t => t.Id)
-            .IsRequired();
-
         ConfigureWorkingHours(builder.ComplexProperty(t => t.Monday));
         ConfigureWorkingHours(builder.ComplexProperty(t => t.Tuesday));
         ConfigureWorkingHours(builder.ComplexProperty(t => t.Wednesday));

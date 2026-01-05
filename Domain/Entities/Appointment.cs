@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using DigitalHealth.Domain.DomainExceptions;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
@@ -22,6 +23,9 @@ namespace Domain.Entities
 
         public static Appointment Create(Doctor doctor, Patient patient, Period period)
         {
+            if (period.Duration > TimeSpan.FromMinutes(60))
+                throw new DomainException("Appointment duration is too long");
+
             return new Appointment(doctor, patient, period);
         }
 
