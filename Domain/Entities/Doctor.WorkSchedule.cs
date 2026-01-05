@@ -49,6 +49,15 @@ public class WorkSchedule : IEntity<Guid>
         };
     }
 
+    public bool IsWorkingHours(Period period)
+    {
+        var hours = GetWorkingHoursForDay(period.StartDate);
+        TimeOnly periodStart = TimeOnly.FromDateTime(period.StartDate);
+        TimeOnly periodEnd = TimeOnly.FromDateTime(period.EndDate);
+
+        return periodStart >= hours.StartDate &&
+           periodEnd <= hours.EndDate;
+    }
 
 
     public static WorkSchedule Create(
