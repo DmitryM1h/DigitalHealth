@@ -1,13 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using DigitalHealth.Application.IntegrationEvents;
 using DigitalHealth.Auth;
-using DigitalHealth.Domain.DomainEvents;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DigitalHealth.Application.Commands.Auth
 {

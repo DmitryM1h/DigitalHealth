@@ -16,6 +16,7 @@ namespace Infrastructure.Data.Persistence.DependencyInjection
             .AddScoped<IScheduleRepository, ScheduleDataSource>()
             .AddScoped<IClinicRepository, ClinicDataSource>()
             .AddScoped<IPatientRepository, PatientRepository>()
+            .AddScoped<IUnitOfWork, UnitOfWork>()
             ;
 
 

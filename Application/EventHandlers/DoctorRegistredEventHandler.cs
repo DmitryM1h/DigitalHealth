@@ -8,17 +8,17 @@ using Infrastructure.Data;
 namespace DigitalHealth.Application.EventHandlers;
 
 
-public class DoctorRegistredEventHandler(IClinicRepository _clinicRepository) : INotificationHandler<DoctorRegisteredIntegrationEvent>
+public class DoctorRegistredEventHandler(IUnitOfWork _uow) : INotificationHandler<DoctorRegisteredIntegrationEvent>
 {
 
     public async Task Handle(DoctorRegisteredIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        var clinic = await _clinicRepository.GetClinicAsync(notification.ClinicId);
+        var clinic = await _uow.Clinics.GetClinicAsync(notification.ClinicId);
 
-        var doctorDto = new HireDoctorDto(notification.DoctorId, notification.FullName, notification.Specialty, notification.Capacity);
+        var doctorDto = new HireDoctorRequest(notification.DoctorId, notification.FullName, notification.Specialty, notification.Capacity);
 
         clinic!.HireDoctor(doctorDto);
 
-        await _clinicRepository.SaveChangesAsync();
+        await _uow.SaveChangesAsync();
     }
 }

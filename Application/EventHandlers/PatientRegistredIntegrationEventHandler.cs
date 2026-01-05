@@ -1,5 +1,6 @@
 ﻿using DigitalHealth.Application.IntegrationEvents;
 using DigitalHealth.Domain.DomainEvents;
+using DigitalHealth.Domain.Repository;
 using Domain.Entities;
 using Domain.Repository;
 using MediatR;
@@ -11,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace DigitalHealth.Application.EventHandlers
 {
-    public class PatientRegistredEventHandler(IPatientRepository _patientRepository) : INotificationHandler<PatientRegisteredIntegrationEvent>
+    public class PatientRegistredEventHandler(IUnitOfWork _uow) : INotificationHandler<PatientRegisteredIntegrationEvent>
     {
 
         public async Task Handle(PatientRegisteredIntegrationEvent notification, CancellationToken cancellationToken)
         {
             var patient = Patient.Create(notification.PatientId, notification.FullName);
 
-            await _patientRepository.AddPatientAsync(patient);
+            await _uow.Patients.AddPatientAsync(patient);
 
-            await _patientRepository.SaveChangesAsync();
+            await _uow.SaveChangesAsync();
 
         }
     }
