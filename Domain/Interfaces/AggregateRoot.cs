@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Contracts;
 
-public abstract class IAggregateRoot<TIdType>
+public abstract class AggregateRoot<TIdType>
 {
     private readonly List<IDomainEvent> _domainEvents = new();
 

@@ -4,6 +4,7 @@ using DigitalHealth.Domain.Repository;
 using MediatR;
 using Domain.Entities;
 using Infrastructure.Data;
+using DigitalHealth.Domain.Dto;
 
 namespace DigitalHealth.Application.EventHandlers;
 

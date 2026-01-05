@@ -16,9 +16,13 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
             .Property(t => t.Id)
             .ValueGeneratedNever();
 
+        //builder
+        //    .HasMany(t => t.Patients);
+
         builder
-            .HasMany(t => t.Patients)
-            .WithMany(t => t.Doctors);
+            .HasMany(t => t.CalendarBlocks)
+            .WithOne(t => t.Doctor);
+            
 
         builder
             .HasOne(t => t.DoctorInfo)

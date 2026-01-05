@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TelemetryContext))]
-    partial class TelemetryContextModelSnapshot : ModelSnapshot
+    [Migration("20260105204300_removedRelation")]
+    partial class removedRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,12 +123,17 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("DoctorId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("DoctorId1")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("IsBusy")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("DoctorId1");
 
                     b.ToTable("CalendarBlocks", "Telemetry");
                 });
@@ -207,6 +215,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("DoctorId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -215,6 +226,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
 
                     b.HasIndex("MedicalRecordId")
                         .IsUnique();
@@ -331,10 +344,14 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.CalendarBlock", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithMany("CalendarBlocks")
+                        .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Doctor", null)
+                        .WithMany("CalendarBlocks")
+                        .HasForeignKey("DoctorId1");
 
                     b.OwnsOne("Domain.ValueObjects.Period", "period", b1 =>
                         {
@@ -381,6 +398,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>
                 {
+                    b.HasOne("Domain.Entities.Doctor", null)
+                        .WithMany("Patients")
+                        .HasForeignKey("DoctorId");
+
                     b.HasOne("Domain.Entities.MedicalRecord", "MedicalRecord")
                         .WithOne()
                         .HasForeignKey("Domain.Entities.Patient", "MedicalRecordId");
@@ -409,6 +430,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("CalendarBlocks");
+
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Repository;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace DigitalHealth.Infrastructure.Data.Persistence
         public async Task AddPatientAsync(Patient patient)
         {
             await _dbContext.AddAsync(patient);
+        }
+
+        public async Task<Patient?> GetPatientById(Guid id)
+        {
+            return await _dbContext.Patients.Where(t => t.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task SaveChangesAsync()

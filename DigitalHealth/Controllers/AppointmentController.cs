@@ -3,14 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DigitalHealth.Controllers
 {
-
-
-
     [Route("api/[controller]")]
     [ApiController]
-    public class ClinicController(IMediator mediator)
+    public class AppointmentController(IMediator mediator) : ControllerBase
     {
-
 
     }
 }

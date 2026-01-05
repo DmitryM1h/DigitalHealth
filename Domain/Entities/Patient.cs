@@ -1,4 +1,6 @@
 ﻿using Core.Contracts;
+using DigitalHealth.Domain.Extensions;
+using Domain.ValueObjects;
 
 
 
@@ -10,15 +12,28 @@ public partial class Patient : IEntity<Guid>
     public Guid Id { get; init; }
     public string FullName { get; init; }
 
-    private List<Doctor> _doctors = new List<Doctor>();
     private List<Appointment> _appointments = new List<Appointment>();
 
-    public IReadOnlyCollection<Doctor> Doctors => _doctors.AsReadOnly();
     public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
 
 
     public Guid? MedicalRecordId { get; set; }
     public MedicalRecord? MedicalRecord { get; set; }
+
+
+    public Appointment MakeAppointment(Doctor doctor, Period period)
+    {
+        var appointmentsForMonth = _appointments.Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month).Select(t => t.EventPeriod).ToList();
+
+        if (appointmentsForMonth.OverlapsWith(period))
+            throw new Exception();
+
+        Appointment appointment = Appointment.Create(doctor, this, period);
+
+        _appointments.Add(appointment);
+
+        return appointment;
+    }
 
     public static Patient Create(Guid Id, string FullName)
     {

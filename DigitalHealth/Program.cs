@@ -5,6 +5,7 @@ using Infrastructure.Data;
 using Infrastructure.Data.Persistence.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,14 +13,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT Token in format: Bearer {your token}"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 builder.Services.AddDatabaseContext()
                 .AddDatabaseUserContext();
 
 builder.Services.AddDataSources();
 builder.Services.AddMediatr();
-builder.Services.AddAuth(builder.Configuration);
 
 
 
@@ -36,6 +62,9 @@ var identityBuilder = builder.Services.AddIdentity<User, IdentityRole<Guid>>(opt
 //.AddDefaultTokenProviders();
 
 identityBuilder.AddTokenProvider("DigitalHealth", typeof(DataProtectorTokenProvider<User>));
+
+
+builder.Services.AddAuth(builder.Configuration);
 
 
 

@@ -13,12 +13,22 @@ namespace Domain.Entities
         public Doctor Doctor { get; private set; } = null!;
 
 
-        public Appointment() { }
-
-        public Appointment(Period eventPeriod)
+        public Appointment(Doctor doctor, Patient patient, Period period) 
         {
-            EventPeriod = eventPeriod;
+            Doctor = doctor;
+            Patient = patient;
+            EventPeriod = period;
         }
+
+        public static Appointment Create(Doctor doctor, Patient patient, Period period)
+        {
+            return new Appointment(doctor, patient, period);
+        }
+
+        private Appointment() { }
+
+
+     
 
 
     }

@@ -32,6 +32,20 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
         return Ok(response);
     }
 
+    [HttpGet("CalendarBlocks")]
+    public async Task<ActionResult<List<Period>>?> GetDoctorsBlocks([FromQuery] Guid doctorId)
+    {
+        var blocks =  await dbContext.Doctors.Where(t => t.Id == doctorId).Include(t => t.CalendarBlocks).FirstOrDefaultAsync();
+
+        return blocks?.CalendarBlocks?.Select(t => t.period)?.ToList() ?? [];
+    }
+
+
+    //[HttpPost]
+    //public async Task<ActionResult> CreateAppointment()
+    //{
+
+    //}
 
     [HttpGet("DoctorGaps")]
     public async Task<Schedule> GetDoctorsGaps([FromQuery] Guid doctorId, [FromQuery] DateTime date, [FromServices] IScheduleService scheduleService)

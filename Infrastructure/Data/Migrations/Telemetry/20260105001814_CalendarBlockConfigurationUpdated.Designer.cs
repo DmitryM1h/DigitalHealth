@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(TelemetryContext))]
-    partial class TelemetryContextModelSnapshot : ModelSnapshot
+    [Migration("20260105001814_CalendarBlockConfigurationUpdated")]
+    partial class CalendarBlockConfigurationUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,6 +76,21 @@ namespace Infrastructure.Migrations
                             Address = "654 Beach Boulevard",
                             City = "Miami"
                         });
+                });
+
+            modelBuilder.Entity("DoctorPatient", b =>
+                {
+                    b.Property<Guid>("DoctorsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PatientsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("DoctorsId", "PatientsId");
+
+                    b.HasIndex("PatientsId");
+
+                    b.ToTable("DoctorPatient", "Telemetry");
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -309,6 +327,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("WorkSchedules", "Telemetry");
                 });
 
+            modelBuilder.Entity("DoctorPatient", b =>
+                {
+                    b.HasOne("Domain.Entities.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
@@ -331,7 +364,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.CalendarBlock", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
-                        .WithMany("CalendarBlocks")
+                        .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -407,8 +440,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
-
-                    b.Navigation("CalendarBlocks");
                 });
 
             modelBuilder.Entity("Domain.Entities.Patient", b =>

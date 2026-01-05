@@ -43,7 +43,7 @@ namespace DigitalHealth.Auth
             var userExists = await userManager.FindByEmailAsync(regRequest.Email);
 
             if (userExists is not null)
-                return Result.Failure<User>("User is not present in the system");
+                return Result.Failure<User>("User is already present in the system");
 
             var result = await userManager.CreateAsync(user, regRequest.Password);
 

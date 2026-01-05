@@ -15,7 +15,7 @@ namespace Infrastructure.Data.Persistence
 
         public async Task<List<CalendarBlock>> GetDoctorsCalendarBlocksForPeriodAsync(Guid doctorId, Period period)
         {
-            return await dbContext.CalendarBlocks.Where(t => t.DoctorId == doctorId && t.period.StartDate >= period.StartDate
+            return await dbContext.CalendarBlocks.Where(t => t.Doctor.Id == doctorId && t.period.StartDate >= period.StartDate
                                                              && t.period.EndDate <= period.EndDate).ToListAsync();
         }
     }

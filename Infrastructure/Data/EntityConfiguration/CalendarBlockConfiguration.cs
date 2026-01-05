@@ -14,8 +14,7 @@ namespace Infrastructure.Data.EntityConfiguration
             builder.HasKey(t => t.Id);
 
             builder.HasOne(t => t.Doctor)
-                .WithOne()
-                .HasForeignKey<CalendarBlock>(t => t.DoctorId)
+                .WithMany(t => t.CalendarBlocks)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

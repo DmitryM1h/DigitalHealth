@@ -2,7 +2,7 @@
 
 namespace DigitalHealth.Domain.Repository
 {
-    public interface IRepository<TEntity, TId> where TEntity : IAggregateRoot<TId>
+    public interface IRepository<TEntity, TId> where TEntity : AggregateRoot<TId>
     {
         Task<TEntity> GetById(TId id);
         Task<IEnumerable<TEntity>> GetAll();
