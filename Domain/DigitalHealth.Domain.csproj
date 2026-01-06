@@ -15,4 +15,8 @@
     <Folder Include="DomainEvents\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DigitalHealth.Shared\DigitalHealth.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

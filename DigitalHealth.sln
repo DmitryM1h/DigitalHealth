@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11312.151 d18.0
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth", "DigitalHealth\DigitalHealth.csproj", "{227BDB51-0EA0-478C-AA13-081C6BC70793}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Auth", "Auth\DigitalHealth.Auth.csproj", "{7500CC41-77F2-4E64-A62D-091A357BBC31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Shared", "DigitalHealth.Shared\DigitalHealth.Shared.csproj", "{EAFB136C-5CC3-4F08-8278-20094619A654}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHealth.Abstractions", "DigitalHealth.Shared\DigitalHealth.Abstractions.csproj", "{EAFB136C-5CC3-4F08-8278-20094619A654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -29,8 +29,13 @@ namespace DigitalHealth.Infrastructure.Data.Persistence
 
 
         public async Task SaveChangesAsync()
-        {
+        { 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task BeginTransaction()
+        {
+            await _dbContext.Database.BeginTransactionAsync().
         }
     }
 }

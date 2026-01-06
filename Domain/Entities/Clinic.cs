@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using DigitalHealth.Abstractions.abstractions;
 using DigitalHealth.Domain.Dto;
 using Domain.Entities;
 

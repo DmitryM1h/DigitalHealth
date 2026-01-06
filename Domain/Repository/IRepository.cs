@@ -1,4 +1,4 @@
-﻿using Core.Contracts;
+﻿using DigitalHealth.Abstractions.abstractions;
 
 namespace DigitalHealth.Domain.Repository
 {

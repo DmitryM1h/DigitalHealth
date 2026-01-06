@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Contracts;
+namespace DigitalHealth.Abstractions.abstractions;
 
 public abstract class AggregateRoot<TIdType>
 {
