@@ -60,7 +60,7 @@ public class WorkSchedule : IEntity<Guid>
     }
 
 
-    public static WorkSchedule Create(
+    public static WorkSchedule Create(Guid id,
         WorkingHours monday,
         WorkingHours tuesday,
         WorkingHours wednesday,
@@ -68,31 +68,6 @@ public class WorkSchedule : IEntity<Guid>
         WorkingHours friday,
         WorkingHours saturday,
         WorkingHours sunday)
-    {
-        return new WorkSchedule
-        {
-            Id = Guid.NewGuid(),
-            Monday = monday,
-            Tuesday = tuesday,
-            Wednesday = wednesday,
-            Thursday = thursday,
-            Friday = friday,
-            Saturday = saturday,
-            Sunday = sunday
-        };
-    }
-
-
-
-    public static WorkSchedule Create(
-        Guid id,
-        WorkingHours? monday = null,
-        WorkingHours? tuesday = null,
-        WorkingHours? wednesday = null,
-        WorkingHours? thursday = null,
-        WorkingHours? friday = null,
-        WorkingHours? saturday = null,
-        WorkingHours? sunday = null)
     {
         return new WorkSchedule
         {

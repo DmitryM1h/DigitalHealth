@@ -7,6 +7,7 @@ using Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DigitalHealth.Controllers;
 
@@ -85,6 +86,50 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
 
     public record DoctorsAppointmentsDto(Guid DoctorId, Guid PatientId,  Period period);
 
+    [HttpPost("WorkSchedule")]
+    public async Task<ActionResult> SetWorkSchedule(SetWorkScheduleDto workScheduleDto)
+    {
+        var doctorId = HttpContext.User.Claims.First(t => t.Type == ClaimTypes.NameIdentifier).Value;
+        var guidId = Guid.Parse(doctorId);
+
+        var schedule = WorkSchedule.Create(guidId,
+            WorkingHours.Create(workScheduleDto.MondayStart, workScheduleDto.MondayEnd),
+            WorkingHours.Create(workScheduleDto.TuesdayStart, workScheduleDto.TuesdayEnd),
+            WorkingHours.Create(workScheduleDto.WednesdayStart, workScheduleDto.WednesdayEnd),
+            WorkingHours.Create(workScheduleDto.ThursdayStart, workScheduleDto.ThursdayEnd),
+            WorkingHours.Create(workScheduleDto.FridayStart, workScheduleDto.FridayEnd),
+            WorkingHours.Create(workScheduleDto.SaturdayStart, workScheduleDto.SaturdayEnd),
+            WorkingHours.Create(workScheduleDto.SundayStart, workScheduleDto.SundayEnd));
+
+        var doctor = await dbContext.Doctors.Where(t => t.Id == guidId).Include(t => t.WorkSchedule).FirstAsync();
+        doctor.SetWorkSchedule(schedule);
+        await dbContext.SaveChangesAsync();
+        return Ok();
+    }
+
+    public record SetWorkScheduleDto
+    {
+        public TimeOnly? MondayStart { get; set; }
+        public TimeOnly? MondayEnd { get; set; }
+
+        public TimeOnly? TuesdayStart { get; set; }
+        public TimeOnly? TuesdayEnd { get; set; }
+
+        public TimeOnly? WednesdayStart { get; set; }
+        public TimeOnly? WednesdayEnd { get; set; }
+
+        public TimeOnly? ThursdayStart { get; set; }
+        public TimeOnly? ThursdayEnd { get; set; }
+
+        public TimeOnly? FridayStart { get; set; }
+        public TimeOnly? FridayEnd { get; set; }
+
+        public TimeOnly? SaturdayStart { get; set; }
+        public TimeOnly? SaturdayEnd { get; set; }
+
+        public TimeOnly? SundayStart { get; set; }
+        public TimeOnly? SundayEnd { get; set; }
+    }
 
 
 

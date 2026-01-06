@@ -27,14 +27,14 @@ internal class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         builder
             .HasOne(t => t.DoctorInfo)
             .WithOne()
-            .HasForeignKey<Doctor>()
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(t => t.WorkSchedule)
             .WithOne()
-            .HasForeignKey<Doctor>()
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<Doctor>("WorkScheduleId") // EF почему то сам не понимает...
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
 
     }
 

@@ -49,6 +49,11 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
         _appointments.Add(appointment);
     }
 
+    public void SetWorkSchedule(WorkSchedule workSchedule)
+    {
+        WorkSchedule = workSchedule;
+    }
+
 
     public static Doctor Create(Guid Id, Clinic clinic,
        string fullName,

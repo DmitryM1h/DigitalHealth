@@ -12,7 +12,8 @@ namespace DigitalHealth.Domain.Repository
         public IDoctorRepository Doctors { get; }
         public IPatientRepository Patients { get; }
         public IClinicRepository Clinics { get; }
-
+        public Task BeginTransactionAsync();
+        public Task CommitTransactionAsync();
         public Task SaveChangesAsync();
     }
 }

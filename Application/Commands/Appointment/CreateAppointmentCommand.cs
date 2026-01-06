@@ -6,24 +6,30 @@ using MediatR;
 
 namespace DigitalHealth.Application.Commands.DoctorCommands;
 
-public record CreateAppointmentCommand(Guid DoctorId, Guid PatientId, Period period) : IRequest<Result>;
+public record CreateAppointmentCommand(Guid DoctorId, Guid PatientId, DateTime startDate, DateTime endDate) : IRequest<Result>;
 
-public class CreateAppointmentCommandHandler(IUnitOfWork _uow, IMediator _mediator) : IRequestHandler<CreateAppointmentCommand, Result>
+public class CreateAppointmentCommandHandler(IUnitOfWork _uow) : IRequestHandler<CreateAppointmentCommand, Result>
 {
     public async Task<Result> Handle(CreateAppointmentCommand request, CancellationToken cancellationToken)
     {
-        var doctor = await _uow.Doctors.GetDoctorById(request.DoctorId);
+        var period = Period.Create(request.startDate, request.endDate);
+
+        await _uow.BeginTransactionAsync();
+
+        var doctor = await _uow.Doctors.GetDoctorByIdWithLock(request.DoctorId);
 
         var patient = await _uow.Patients.GetPatientById(request.PatientId);
 
         if (doctor is null || patient is null)
             return Result.Failure("Doctor or patient does not exist");
 
-        var appointment = patient.MakeAppointment(doctor, request.period);
+        var appointment = patient.MakeAppointment(doctor, period);
 
         doctor.ConfirmAppointment(appointment);
 
         await _uow.SaveChangesAsync();
+
+        await _uow.CommitTransactionAsync();
 
         return Result.Success();
        

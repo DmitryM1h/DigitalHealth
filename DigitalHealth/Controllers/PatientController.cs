@@ -39,8 +39,7 @@ namespace DigitalHealth.Controllers
         public async Task<ActionResult> MakeAppointment([FromBody] MakeAppointmentDto makeappointmentDto)
         {
             var patientId = HttpContext.User.Claims.First(t => t.Type == ClaimTypes.NameIdentifier).Value;
-            var period = Period.Create(makeappointmentDto.startDate, makeappointmentDto.endDate);
-            var command = new CreateAppointmentCommand(makeappointmentDto.DoctorId, Guid.Parse(patientId), period);
+            var command = new CreateAppointmentCommand(makeappointmentDto.DoctorId, Guid.Parse(patientId), makeappointmentDto.startDate, makeappointmentDto.endDate);
 
             var result = await mediator.Send(command);
 
