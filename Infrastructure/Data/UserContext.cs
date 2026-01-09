@@ -21,8 +21,17 @@ public class UserContext : IdentityDbContext<
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
         base.OnModelCreating(builder);
+
+        builder.Entity<User>()
+            .HasIndex(t => t.NormalizedEmail)
+            .IsUnique();
+
+        builder.Entity<User>()
+          .HasIndex(t => t.NormalizedUserName)
+          .IsUnique(false);
+
+
         builder.HasDefaultSchema("Auth");
     }
  

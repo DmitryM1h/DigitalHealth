@@ -17,10 +17,11 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .Property(t => t.Id)
             .ValueGeneratedNever();
 
-        builder
-            .HasOne(t => t.MedicalRecord)
-            .WithOne()
-            .HasForeignKey<Patient>(t => t.MedicalRecordId);
+        //builder
+        //    .HasOne(t => t.MedicalRecord)
+        //    .WithOne()
+        //    .HasForeignKey<Patient>()
+        //    .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

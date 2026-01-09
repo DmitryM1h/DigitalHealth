@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Migrations.User
+namespace DigitalHealth.Infrastructure.Migrations.User
 {
     /// <inheritdoc />
-    public partial class initial_migration : Migration
+    public partial class IdentityUserIndexOnEmail : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,7 @@ namespace Infrastructure.Migrations.User
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Age = table.Column<int>(type: "integer", nullable: false),
                     City = table.Column<string>(type: "text", nullable: true),
+                    BirthDay = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -210,14 +211,14 @@ namespace Infrastructure.Migrations.User
                 name: "EmailIndex",
                 schema: "Auth",
                 table: "AspNetUsers",
-                column: "NormalizedEmail");
+                column: "NormalizedEmail",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 schema: "Auth",
                 table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true);
+                column: "NormalizedUserName");
         }
 
         /// <inheritdoc />

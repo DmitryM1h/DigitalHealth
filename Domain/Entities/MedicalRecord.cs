@@ -3,24 +3,16 @@
 
 namespace Domain.Entities;
 
-
-public record AnalysisResult(string title, string pdfUrl);
-public record Diagnosis(string title, string text, Doctor doctor, Patient Patient);
-
 public class MedicalRecord : IEntity<Guid>
 {
-
-    public MedicalRecord()
-    {
-
-    }
     public Guid Id { get; init; }
+    public Guid MedicalCardId { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public Guid DoctorId { get; init; }
+    public string? Subjective { get; private set; }
+    public string? Prescriptions { get; private set; }
+    public string Diagnosis { get; private set; }
 
-
-    //public IReadOnlyCollection<AnalysisResult> analyses { get; private set; } = null!;
-
-    //public IReadOnlyCollection<Diagnosis> diagnosises { get; private set; } = null!;
-
-
+    private MedicalRecord(){}
 }
 

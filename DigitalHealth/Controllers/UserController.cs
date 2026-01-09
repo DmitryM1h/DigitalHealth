@@ -30,7 +30,7 @@ namespace DigitalHealth.Controllers
 
 
         [HttpPost("CreateRole")]
-        [Authorize(Roles = nameof(Role.Administrator))]
+       // [Authorize(Roles = nameof(Role.Administrator))]
         public async Task<IActionResult> CreateRole(string roleName)
         {
             if (!Enum.TryParse<Role>(roleName, out _))

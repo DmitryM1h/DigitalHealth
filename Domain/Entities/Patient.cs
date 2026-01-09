@@ -1,6 +1,7 @@
 ﻿using Core.Contracts;
 using DigitalHealth.Abstractions.abstractions;
 using DigitalHealth.Domain.DomainExceptions;
+using DigitalHealth.Domain.Entities;
 using DigitalHealth.Domain.Extensions;
 using Domain.ValueObjects;
 
@@ -18,10 +19,7 @@ public partial class Patient : AggregateRoot<Guid>, IEntity<Guid>
 
     public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
 
-
-    //Убрать id
-    public Guid? MedicalRecordId { get; set; }
-    public MedicalRecord? MedicalRecord { get; set; }
+    public MedicalCard? MedicalCard { get; set; }
 
 
     public Appointment ConfirmAppointment(Appointment appointment)
@@ -44,6 +42,7 @@ public partial class Patient : AggregateRoot<Guid>, IEntity<Guid>
 
     public static Patient Create(Guid Id, string FullName)
     {
+        // создать медкарту
         return new Patient
         {
             Id = Id,

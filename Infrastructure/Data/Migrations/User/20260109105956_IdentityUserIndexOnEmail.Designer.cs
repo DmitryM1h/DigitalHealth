@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.Migrations.User
+namespace DigitalHealth.Infrastructure.Migrations.User
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20251101180859_initial_migration")]
-    partial class initial_migration
+    [Migration("20260109105956_IdentityUserIndexOnEmail")]
+    partial class IdentityUserIndexOnEmail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace Infrastructure.Migrations.User
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.User", b =>
+            modelBuilder.Entity("Auth.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,6 +37,9 @@ namespace Infrastructure.Migrations.User
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("City")
                         .HasColumnType("text");
@@ -88,10 +91,10 @@ namespace Infrastructure.Migrations.User
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
+                        .IsUnique()
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
-                        .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", "Auth");
@@ -238,7 +241,7 @@ namespace Infrastructure.Migrations.User
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Core.Entities.User", null)
+                    b.HasOne("Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -247,7 +250,7 @@ namespace Infrastructure.Migrations.User
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Core.Entities.User", null)
+                    b.HasOne("Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -262,7 +265,7 @@ namespace Infrastructure.Migrations.User
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.User", null)
+                    b.HasOne("Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -271,7 +274,7 @@ namespace Infrastructure.Migrations.User
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Core.Entities.User", null)
+                    b.HasOne("Auth.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
