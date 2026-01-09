@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using DigitalHealth.Domain.DomainExceptions;
+using Domain.Interfaces;
 using Domain.Repository;
 using Domain.ValueObjects;
 
@@ -34,7 +35,7 @@ public class ScheduleService : IScheduleService
             .Concat(doctorsBlocks.Select(t => new { t.period.StartDate, t.period.EndDate }))
             .ToList();
 
-        var doctorSchedule = await _scheduleDataSource.GetDoctorsWorkingSchedule(doctorId) ?? throw new Exception("No schedule provided");
+        var doctorSchedule = await _scheduleDataSource.GetDoctorsWorkingSchedule(doctorId) ?? throw new DomainException("Doctor must configure working hours first");
 
         List<SlotsForDay> slotsForDays = [];
 

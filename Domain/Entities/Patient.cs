@@ -25,7 +25,11 @@ public partial class Patient : IEntity<Guid>
 
     public Appointment MakeAppointment(Doctor doctor, Period period)
     {
-        var appointmentsForMonth = _appointments.Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month).Select(t => t.EventPeriod).ToList();
+        var appointmentsForMonth = _appointments
+            .Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month 
+                    && t.EventPeriod.StartDate.Day == period.StartDate.Day)
+            .Select(t => t.EventPeriod)
+            .ToList();
 
         if (appointmentsForMonth.OverlapsWith(period))
             throw new DomainException("The slot is not available");

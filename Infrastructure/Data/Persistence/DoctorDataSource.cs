@@ -17,7 +17,7 @@ public class DoctorDataSource(TelemetryContext dbContext) : IDoctorRepository
     }
 
     public async Task<Doctor?> GetDoctorByIdWithLock(Guid id)
-    {
+    { // TODO фильтрация по дате + индекс
         return await dbContext.Doctors
             .FromSqlRaw(@"SELECT * FROM ""Telemetry"".""Doctors"" d WHERE d.""Id"" = {0} FOR UPDATE", id)
             .Include(t => t.WorkSchedule)

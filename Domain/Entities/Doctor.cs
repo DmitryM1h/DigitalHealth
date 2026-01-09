@@ -36,11 +36,21 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
         if(WorkSchedule is null)
             throw new DomainException("Work schedule is not set. Doctor must configure working hours first.");
 
-        if (!WorkSchedule!.IsWorkingHours(period))
+        if (!WorkSchedule.IsWorkingHours(period))
             throw new DomainException("Appointment time is outside working hours");
 
-        var appointmentsForMonth = _appointments.Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month).Select(t => t.EventPeriod);
-        var blocksForMonth = _calendarBlocks.Where(t => t.period.StartDate.Month == period.StartDate.Month).Select(t => t.period);
+        var appointmentsForMonth = _appointments
+            .Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month
+                        && t.EventPeriod.StartDate.Day == period.StartDate.Day
+                        && t.EventPeriod.StartDate.Year == period.StartDate.Year)
+            .Select(t => t.EventPeriod);
+
+        var blocksForMonth = _calendarBlocks
+            .Where(t => t.period.StartDate.Month == period.StartDate.Month
+                                && t.period.StartDate.Day == period.StartDate.Day
+                                && t.period.StartDate.Year == period.StartDate.Year)
+            .Select(t => t.period);
+
         var occupiedPeriods = appointmentsForMonth.Concat(blocksForMonth).ToList();
 
         if (occupiedPeriods.OverlapsWith(period))
@@ -68,7 +78,6 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
             Specialty = specialty,
             Capacity = capacity,
             _appointments = new List<Appointment>(),
-            //_patients = new List<Patient>()
         };
     }
 

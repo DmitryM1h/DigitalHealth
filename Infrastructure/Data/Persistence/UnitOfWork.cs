@@ -8,9 +8,6 @@ namespace DigitalHealth.Infrastructure.Data.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        //public DbSet<Doctor> Doctors => _dbContext.Doctors;
-        //public DbSet<Patient> Patients => _dbContext.Patients;
-
         public UnitOfWork(TelemetryContext _dbContext,
             IDoctorRepository _doctorRepository,
             IPatientRepository _patientRepository,
