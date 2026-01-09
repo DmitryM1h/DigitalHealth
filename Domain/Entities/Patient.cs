@@ -23,18 +23,18 @@ public partial class Patient : IEntity<Guid>
     public MedicalRecord? MedicalRecord { get; set; }
 
 
-    public Appointment MakeAppointment(Doctor doctor, Period period)
+    public Appointment ConfirmAppointment(Appointment appointment)
     {
+        var startdate = appointment.EventPeriod.StartDate;
+
         var appointmentsForMonth = _appointments
-            .Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month 
-                    && t.EventPeriod.StartDate.Day == period.StartDate.Day)
+            .Where(t => t.EventPeriod.StartDate.Month == startdate.Month 
+                    && t.EventPeriod.StartDate.Day == startdate.Day)
             .Select(t => t.EventPeriod)
             .ToList();
 
-        if (appointmentsForMonth.OverlapsWith(period))
+        if (appointmentsForMonth.OverlapsWith(appointment.EventPeriod))
             throw new DomainException("The slot is not available");
-
-        Appointment appointment = Appointment.Create(doctor, this, period);
 
         _appointments.Add(appointment);
 

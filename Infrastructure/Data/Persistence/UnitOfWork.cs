@@ -26,7 +26,9 @@ namespace DigitalHealth.Infrastructure.Data.Persistence
 
         public async Task BeginTransactionAsync()
         {
-            _dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
+           // _dbContext.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
+            _dbContext.Database.BeginTransaction();
+
         }
         public async Task CommitTransactionAsync()
         {

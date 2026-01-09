@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using DigitalHealth.Domain.Repository;
+using Domain.Entities;
 using Domain.ValueObjects;
 using MediatR;
 
@@ -16,20 +17,24 @@ public class CreateAppointmentCommandHandler(IUnitOfWork _uow) : IRequestHandler
 
         await _uow.BeginTransactionAsync();
 
-        var doctor = await _uow.Doctors.GetDoctorByIdWithLock(request.DoctorId);
+        var doctor = await _uow.Doctors.GetDoctorWithAppointmentsForDayWithLock(request.DoctorId, period.StartDate);
+        Console.WriteLine("Зашел");
 
         var patient = await _uow.Patients.GetPatientById(request.PatientId);
 
         if (doctor is null || patient is null)
             return Result.Failure("Doctor or patient does not exist");
 
-        var appointment = patient.MakeAppointment(doctor, period);
+        Appointment appointment = Appointment.Create(doctor, patient, period);
+
+        patient.ConfirmAppointment(appointment);
 
         doctor.ConfirmAppointment(appointment);
 
         await _uow.SaveChangesAsync();
 
         await _uow.CommitTransactionAsync();
+        Console.WriteLine("Вышел");
 
         return Result.Success();
        
