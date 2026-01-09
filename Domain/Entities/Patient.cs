@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using DigitalHealth.Abstractions.abstractions;
 using DigitalHealth.Domain.DomainExceptions;
 using DigitalHealth.Domain.Extensions;
 using Domain.ValueObjects;
@@ -7,7 +8,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
-public partial class Patient : IEntity<Guid>
+public partial class Patient : AggregateRoot<Guid>, IEntity<Guid>
 {
   
     public Guid Id { get; init; }

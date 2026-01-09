@@ -18,7 +18,6 @@ public class CreateAppointmentCommandHandler(IUnitOfWork _uow) : IRequestHandler
         await _uow.BeginTransactionAsync();
 
         var doctor = await _uow.Doctors.GetDoctorWithAppointmentsForDayWithLock(request.DoctorId, period.StartDate);
-        Console.WriteLine("Зашел");
 
         var patient = await _uow.Patients.GetPatientById(request.PatientId);
 
@@ -34,7 +33,6 @@ public class CreateAppointmentCommandHandler(IUnitOfWork _uow) : IRequestHandler
         await _uow.SaveChangesAsync();
 
         await _uow.CommitTransactionAsync();
-        Console.WriteLine("Вышел");
 
         return Result.Success();
        

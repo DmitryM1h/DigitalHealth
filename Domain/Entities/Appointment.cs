@@ -29,6 +29,9 @@ namespace Domain.Entities
             if(period.StartDate - DateTime.Now < TimeSpan.FromMinutes(30))
                 throw new DomainException("Appointment must be booked at least 30 minutes in advance");
 
+            if(period.StartDate > DateTime.Now.AddMonths(2).Date)
+                throw new DomainException("Cannot book appointment more than 2 months in advance");
+
             return new Appointment(doctor, patient, period);
         }
 
