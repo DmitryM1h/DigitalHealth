@@ -2,7 +2,6 @@
 using DigitalHealth.Abstractions.abstractions;
 using DigitalHealth.Domain.DomainExceptions;
 using DigitalHealth.Domain.Extensions;
-using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
@@ -39,16 +38,12 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
         if (!WorkSchedule.IsWorkingHours(period))
             throw new DomainException("Appointment time is outside working hours");
 
-        var appointmentsForMonth = _appointments
-            .Where(t => t.EventPeriod.StartDate.Month == period.StartDate.Month
-                        && t.EventPeriod.StartDate.Day == period.StartDate.Day
-                        && t.EventPeriod.StartDate.Year == period.StartDate.Year)
+        var appointmentsForMonth = _appointments 
+            .Where(t => t.EventPeriod.IsSameDate(period))
             .Select(t => t.EventPeriod);
 
         var blocksForMonth = _calendarBlocks
-            .Where(t => t.period.StartDate.Month == period.StartDate.Month
-                                && t.period.StartDate.Day == period.StartDate.Day
-                                && t.period.StartDate.Year == period.StartDate.Year)
+            .Where(t => t.period.IsSameDate(period))
             .Select(t => t.period);
 
         var occupiedPeriods = appointmentsForMonth.Concat(blocksForMonth).ToList();

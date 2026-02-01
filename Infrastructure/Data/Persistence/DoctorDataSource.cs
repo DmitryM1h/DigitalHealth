@@ -17,6 +17,11 @@ public class DoctorDataSource(TelemetryContext dbContext) : IDoctorRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<bool> DoctorExists(Guid id)
+    {
+        return await dbContext.Doctors.AnyAsync(t => t.Id == id);
+    }
+
     public async Task<Doctor?> GetDoctorWithAppointmentsForDayWithLock(Guid id, DateTime date)
     { // TODO индекс по дате
         var beginningOfDay = date.Date;

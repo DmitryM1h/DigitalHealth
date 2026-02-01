@@ -17,7 +17,7 @@ public class CreateAppointmentCommandHandler(IUnitOfWork _uow) : IRequestHandler
 
         await _uow.BeginTransactionAsync();
 
-        var doctor = await _uow.Doctors.GetDoctorWithAppointmentsForDayWithLock(request.DoctorId, period.StartDate);
+        var doctor = await _uow.Doctors.GetDoctorWithAppointmentsForDayWithLock(request.DoctorId, period.StartDate.Date);
 
         var patient = await _uow.Patients.GetPatientById(request.PatientId);
 

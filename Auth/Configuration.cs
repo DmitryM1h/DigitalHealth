@@ -34,8 +34,16 @@ namespace DigitalHealth.Auth
                     {
                         OnTokenValidated = context =>
                         {
-                            Console.WriteLine("Token validated successfully");
+
+                            var expiration = context.SecurityToken.ValidTo;
+                            var now = DateTime.UtcNow;
+
+                            Console.WriteLine($"Token validated. Expires at: {expiration}");
+                            Console.WriteLine($"Current UTC time: {now}");
+                            Console.WriteLine($"Is expired: {expiration < now}");
+
                             return Task.CompletedTask;
+                         
                         },
                         OnAuthenticationFailed = context =>
                         {
@@ -44,13 +52,11 @@ namespace DigitalHealth.Auth
                         },
                         OnMessageReceived = context =>
                         {
-
-
                             var accessToken = context.Request.Query["access_token"];
                             var path = context.HttpContext.Request.Path;
 
                             if (!string.IsNullOrEmpty(accessToken) &&
-                                path.StartsWithSegments("/interview"))
+                                path.StartsWithSegments("/chat"))
                             {
                                 context.Token = accessToken;
                                 Console.WriteLine($"JWT token extracted from query string for SignalR");

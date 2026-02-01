@@ -3,7 +3,6 @@ using DigitalHealth.Abstractions.abstractions;
 using DigitalHealth.Domain.DomainExceptions;
 using DigitalHealth.Domain.Entities;
 using DigitalHealth.Domain.Extensions;
-using Domain.ValueObjects;
 
 
 
@@ -19,7 +18,7 @@ public partial class Patient : AggregateRoot<Guid>, IEntity<Guid>
 
     public IReadOnlyCollection<Appointment> Appointments => _appointments.AsReadOnly();
 
-    public MedicalCard? MedicalCard { get; set; }
+    public MedicalCard MedicalCard { get; set; }
 
 
     public Appointment ConfirmAppointment(Appointment appointment)
@@ -27,8 +26,7 @@ public partial class Patient : AggregateRoot<Guid>, IEntity<Guid>
         var startdate = appointment.EventPeriod.StartDate;
 
         var appointmentsForMonth = _appointments
-            .Where(t => t.EventPeriod.StartDate.Month == startdate.Month 
-                    && t.EventPeriod.StartDate.Day == startdate.Day)
+            .Where(t => t.EventPeriod.IsSameDate(appointment.EventPeriod))
             .Select(t => t.EventPeriod)
             .ToList();
 
@@ -42,11 +40,12 @@ public partial class Patient : AggregateRoot<Guid>, IEntity<Guid>
 
     public static Patient Create(Guid Id, string FullName)
     {
-        // создать медкарту
+        var medicalCard = new MedicalCard();
         return new Patient
         {
             Id = Id,
             FullName = FullName,
+            MedicalCard = medicalCard
         };
     }
 

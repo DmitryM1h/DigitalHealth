@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using DigitalHealth.Domain.Entities;
+using Domain.Entities;
 using Infrastructure.Data.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -19,6 +20,7 @@ public class TelemetryContext : DbContext
     public DbSet<WorkSchedule> WorkSchedules { get; set; }
     public DbSet<CalendarBlock> CalendarBlocks { get; set; }
     public DbSet<MedicalRecord> MedicalRecords { get; set; }
+    public DbSet<MedicalDevice> MedicalDevices { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

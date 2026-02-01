@@ -19,7 +19,7 @@ namespace DigitalHealth.Infrastructure.Data.Persistence
             Clinics = _clinicRepository;
         }
 
-        public TelemetryContext _dbContext { get; }
+        private TelemetryContext _dbContext;
         public IDoctorRepository Doctors { get; }
         public IPatientRepository Patients { get; }
         public IClinicRepository Clinics { get; }

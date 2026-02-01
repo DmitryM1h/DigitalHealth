@@ -15,8 +15,4 @@
 		<ProjectReference Include="..\Infrastructure\DigitalHealth.Infrastructure.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Requests\Clinic\" />
-	</ItemGroup>
-
 </Project>

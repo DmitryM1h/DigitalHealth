@@ -2,8 +2,6 @@
 using DigitalHealth.Application.Commands.DoctorCommands;
 using DigitalHealth.Application.Requests.Auth;
 using DigitalHealth.Auth;
-using Domain.ValueObjects;
-using Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

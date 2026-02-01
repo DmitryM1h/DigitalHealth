@@ -18,7 +18,7 @@ internal class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .ValueGeneratedNever();
 
         //builder
-        //    .HasOne(t => t.MedicalRecord)
+        //    .HasOne(t => t.MedicalCard)
         //    .WithOne()
         //    .HasForeignKey<Patient>()
         //    .OnDelete(DeleteBehavior.Cascade);

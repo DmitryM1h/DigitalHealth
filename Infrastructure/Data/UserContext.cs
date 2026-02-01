@@ -31,6 +31,10 @@ public class UserContext : IdentityDbContext<
           .HasIndex(t => t.NormalizedUserName)
           .IsUnique(false);
 
+        //builder.Entity<User>()
+        //    .Property(t => t.UserName)
+        //    .
+
 
         builder.HasDefaultSchema("Auth");
     }

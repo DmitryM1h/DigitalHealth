@@ -18,6 +18,12 @@ public class Period : ValueObject
         EndDate = endDate.Kind == DateTimeKind.Utc ? endDate : DateTime.SpecifyKind(endDate, DateTimeKind.Utc);
     }
 
+
+    public bool IsSameDate(Period period)
+    {
+        return StartDate.Date == period.StartDate.Date;
+    }
+    
     public static Period Create(DateTime startDate, DateTime endDate)
     {
         if (startDate > endDate)

@@ -1,7 +1,7 @@
 ﻿using DigitalHealth.Application.Commands.Auth;
+using DigitalHealth.Application.Commands.Doctor;
 using DigitalHealth.Application.Requests.Auth;
 using Domain.Entities;
-using Domain.Interfaces;
 using Domain.ValueObjects;
 using Infrastructure.Data;
 using MediatR;
@@ -33,26 +33,19 @@ public class DoctorController(IMediator mediator, TelemetryContext dbContext) : 
         return Ok(response);
     }
 
-    [HttpGet("CalendarBlocks")]
-    public async Task<ActionResult<List<Period>>?> GetDoctorsBlocks([FromQuery] Guid doctorId)
-    {
-        var blocks =  await dbContext.Doctors.Where(t => t.Id == doctorId).Include(t => t.CalendarBlocks).FirstOrDefaultAsync();
-
-        return blocks?.CalendarBlocks?.Select(t => t.period)?.ToList() ?? [];
-    }
-
-
-    //[HttpPost]
-    //public async Task<ActionResult> CreateAppointment()
-    //{
-
-    //}
-
     [HttpGet("DoctorGaps")]
-    public async Task<Schedule> GetDoctorsGaps([FromQuery] Guid doctorId, [FromQuery] DateTime date, [FromServices] IScheduleService scheduleService)
+    public async Task<ActionResult> GetDoctorsGaps([FromQuery] Guid doctorId, [FromQuery] DateTime date)
     {
+        var command = new GetDoctorFreeSlotsCommand(doctorId, DateOnly.FromDateTime(date));
 
-        return await scheduleService.GetDoctorFreeGapsAsync(doctorId, date);
+        var result = await mediator.Send(command);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Value);
     }
 
 
