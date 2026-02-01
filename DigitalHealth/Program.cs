@@ -1,5 +1,6 @@
 ﻿using Auth;
 using DigitalHealth.Auth;
+using DigitalHealth.Infrastructure.Redis;
 using Infrastructure.Configuration;
 using Infrastructure.Data;
 using Infrastructure.Data.Persistence.DependencyInjection;
@@ -41,8 +42,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddDatabaseContext()
-                .AddDatabaseUserContext();
+builder.Services.AddDatabaseContext(builder.Configuration)
+                .AddDatabaseUserContext(builder.Configuration);
+builder.Services.AddRedis(builder.Configuration);
 
 builder.Services.AddDataSources();
 builder.Services.AddMediatr();

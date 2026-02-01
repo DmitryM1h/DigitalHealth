@@ -17,7 +17,7 @@ namespace DigitalHealth.Application.Commands.Doctor
             if (!await _uow.Doctors.DoctorExists(request.DoctorId))
                 return Result.Failure<Schedule>("Doctor was not found");
 
-            var schedule = await _scheduleService.GetDoctorFreeGapsAsync(request.DoctorId, request.Month.ToDateTime(new TimeOnly()));
+            var schedule = await _scheduleService.GetDoctorFreeGapsForMonthAsync(request.DoctorId, request.Month.ToDateTime(new TimeOnly()));
 
             return Result.Success(schedule);
         }

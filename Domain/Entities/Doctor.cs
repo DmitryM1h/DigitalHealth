@@ -1,5 +1,6 @@
 ﻿using Core.Contracts;
 using DigitalHealth.Abstractions.abstractions;
+using DigitalHealth.Domain.DomainEvents;
 using DigitalHealth.Domain.DomainExceptions;
 using DigitalHealth.Domain.Extensions;
 
@@ -52,6 +53,8 @@ public class Doctor : AggregateRoot<Guid>, IEntity<Guid>
             throw new DomainException("The slot is not available");
 
         _appointments.Add(appointment);
+
+        RaiseDomainEvent(new AppointmentCreatedDomainEvent(Id, appointment.Patient.Id, period));
     }
 
     public void SetWorkSchedule(WorkSchedule workSchedule)

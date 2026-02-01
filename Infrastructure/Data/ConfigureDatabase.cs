@@ -9,16 +9,16 @@ namespace Infrastructure.Data
 {
     public static class ConfigureDatabase
     {
-        public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
+        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = GetConnectionString(configuration);
+
             return services.AddDbContextPool<TelemetryContext>(options =>
             {
-                options.UseNpgsql("Host=localhost;Port=5432;Database=DigitalHealthDb;Username=postgres;Password=3008", opts =>
+                options.UseNpgsql(connectionString, opts =>
                 {
                     opts.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
                     opts.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Telemetry");
-                    
-
 
                 }).EnableSensitiveDataLogging();
             });
@@ -26,11 +26,13 @@ namespace Infrastructure.Data
         }
 
 
-        public static IServiceCollection AddDatabaseUserContext(this IServiceCollection services)
+        public static IServiceCollection AddDatabaseUserContext(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = GetConnectionString(configuration);
+
             return services.AddDbContextPool<UserContext>(options =>
             {
-                options.UseNpgsql("Host=localhost;Port=5432;Database=DigitalHealthDb;Username=postgres;Password=3008", opts =>
+                options.UseNpgsql(connectionString, opts =>
                 {
                     opts.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
                     opts.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "Auth");
@@ -40,10 +42,10 @@ namespace Infrastructure.Data
 
         }
 
-        public static string GetConnection(IConfiguration configuration)
+        public static string GetConnectionString(IConfiguration configuration)
         {
             return configuration.GetConnectionString("DefaultConnection")
-                ?? throw new Exception("Connection string not found");
+                ?? throw new Exception("Connection string to database was not found");
         }
     }
 }
